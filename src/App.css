@@ -35,3 +35,13 @@
   ); /* Gradient from black to transparent */
   pointer-events: none; /* Allow clicks to pass through the overlay */
 }
+
+
+.draggable-component {
+  opacity: 1;
+  transition: opacity 0.1s ease-in-out;
+}
+
+.draggable-component:active{
+  opacity: 0.5; /* Adjust opacity as needed */
+}

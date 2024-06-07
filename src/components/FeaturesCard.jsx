@@ -1,13 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaInfo } from "react-icons/fa";
 import { GoPaperclip } from "react-icons/go";
 import { RxDragHandleDots2 } from "react-icons/rx";
 
-const FeaturesCard = ({ title }) => {
+const FeaturesCard = ({
+  index,
+  title,
+  handleDragStart,
+  handleDragOver,
+  handleDrop,
+}) => {
+  const [isChecked, setIsChecked] = useState(false);
+
   return (
-    <div className="flex items-center bg-slate-50 justify-between px-4 py-6 rounded-2xl w-full">
+    <div
+      draggable
+      onDragStart={(e) => handleDragStart(e, index)}
+      onDragOver={(e) => handleDragOver(e)}
+      onDrop={(e) => handleDrop(e, index)}
+      onClick={() => {
+        setIsChecked(!isChecked);
+      }}
+      className="draggable-component flex items-center bg-slate-50 justify-between px-4 py-6 rounded-2xl w-full"
+    >
       <div className="flex gap-3 items-center">
-        <input type="checkbox" name={title} id={title} />
+        <input type="checkbox" name={title} id={title} checked={isChecked} />
         <span>{title}</span>
       </div>
       <div className="flex gap-3 items-center">

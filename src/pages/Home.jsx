@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import Logo from "../assets/Logo.png";
 import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
 import { FirebaseDB } from "../firebaseConfig";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -20,18 +22,20 @@ const Home = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const usersRef = collection(FirebaseDB, "users");
-      const q = query(usersRef, where("email", "==", data.email));
-      const querySnapshot = await getDocs(q);
+      if (data.name && data.email) {
+        const usersRef = collection(FirebaseDB, "users");
+        const q = query(usersRef, where("email", "==", data.email));
+        const querySnapshot = await getDocs(q);
 
-      if (querySnapshot.empty) {
-        // If no matching documents are found, add the new document
-        await addDoc(usersRef, {
-          name: data.name,
-          email: data.email,
-        });
-        console.log("Success!");
-        
+        if (querySnapshot.empty) {
+          // If no matching documents are found, add the new document
+          await addDoc(usersRef, {
+            name: data.name,
+            email: data.email,
+          });
+          console.log("Success!");
+        }
+        navigate("/colleges");
       }
     } catch (error) {
       alert("Error Occurred!");
@@ -48,7 +52,7 @@ const Home = () => {
         </h3>
         <form
           className="px-5 py-5 flex flex-col gap-4 bg-[#C4DAFF] border border-gray-500 drop-shadow-2xl rounded-xl w-[100%] lg:w-[70%] m-auto mt-5"
-          onSubmit={(e) => handleSubmit(e)}
+          onSubmit={handleSubmit}
         >
           <div className="flex justify-between gap-4 w-full">
             <div className="flex flex-col w-full">
