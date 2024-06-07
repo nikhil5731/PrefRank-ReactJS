@@ -31,6 +31,7 @@ const Home = () => {
           email: data.email,
         });
         console.log("Success!");
+        
       }
     } catch (error) {
       alert("Error Occurred!");

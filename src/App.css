@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Sanchez:ital@0;1&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Sanchez:ital@0;1&display=swap");
 
 * {
   margin: 0;
@@ -12,4 +12,26 @@
   background-size: cover;
   background-position: center;
   overflow-x: hidden;
+}
+
+.shadow-inner-new {
+  --tw-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.8);
+  --tw-shadow-colored: inset 0 2px 4px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.overlayGradient::before {
+  content: ""; /* Required for pseudo-elements */
+  position: absolute; /* Position the gradient overlay */
+  top: 0; /* Position at the top of the element */
+  right: 0; /* Position at the right of the element */
+  bottom: 0; /* Extend to the bottom of the element */
+  left: 0; /* Extend to the left of the element */
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 1),
+    rgba(0, 0, 0, 0)
+  ); /* Gradient from black to transparent */
+  pointer-events: none; /* Allow clicks to pass through the overlay */
 }
