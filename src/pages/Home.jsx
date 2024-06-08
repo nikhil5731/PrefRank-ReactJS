@@ -85,13 +85,15 @@ const Home = () => {
               <span className=" text-[#334C8A] font-semibold text-xl">
                 JEE:
               </span>
-              <input
-                type="text"
+              <select
                 name="jee"
-                placeholder="JEE"
-                className=" rounded-lg p-2 h-[3rem] outline-none"
                 onChange={handleOnChange}
-              />
+                className=" rounded-lg p-2 h-[3rem] outline-none"
+              >
+                <option value="">Choose an option</option>
+                <option value="jeeMains">JEE Mains</option>
+                <option value="jeeAdvanced">JEE Advanced</option>
+              </select>
             </div>
           </div>
           <div className="flex justify-between gap-4">
@@ -100,23 +102,32 @@ const Home = () => {
                 Quota{" "}
                 <span className="text-sm font-thin">(for JEE main only:)</span>:
               </span>
-              <input
-                type="text"
+
+              <select
                 name="quota"
-                placeholder="Name"
-                className=" rounded-lg p-2 h-[3rem] outline-none w-full"
                 onChange={handleOnChange}
-              />
+                className=" rounded-lg p-2 h-[3rem] outline-none w-full text-ellipsis overflow-hidden"
+              >
+                <option value="">Choose an option</option>
+                <option value="homeStateMains">JEE Mains - Home State</option>
+                <option value="allIndiaMains">JEE Mains - All India</option>
+                <option value="allIndiaAdv">JEE Advanced</option>
+              </select>
             </div>
             <div className="flex flex-col w-full">
               <span className=" text-[#334C8A] font-semibold">Category:</span>
-              <input
-                type="text"
+
+              <select
                 name="category"
-                placeholder="Category"
-                className=" rounded-lg p-2 h-[3rem] outline-none w-full"
                 onChange={handleOnChange}
-              />
+                className=" rounded-lg p-2 h-[3rem] outline-none w-full text-ellipsis overflow-hidden"
+              >
+                <option value="">Choose an option</option>
+                <option value="general">General</option>
+                <option value="obcNcl">OBC NCL</option>
+                <option value="scst">SC/ST</option>
+                <option value="female">Female</option>
+              </select>
             </div>
           </div>
           <div className="flex justify-between gap-4">
@@ -125,7 +136,7 @@ const Home = () => {
                 AIR:
               </span>
               <input
-                type="text"
+                type="number"
                 name="air"
                 placeholder="AIR"
                 className=" rounded-lg p-2 h-[3rem] outline-none"
