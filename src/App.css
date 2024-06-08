@@ -36,12 +36,26 @@
   pointer-events: none; /* Allow clicks to pass through the overlay */
 }
 
+.overlayGradient2::before {
+  content: ""; /* Required for pseudo-elements */
+  position: absolute; /* Position the gradient overlay */
+  top: 0; /* Position at the top of the element */
+  right: 0; /* Position at the right of the element */
+  bottom: 0; /* Extend to the bottom of the element */
+  left: 0; /* Extend to the left of the element */
+  background: linear-gradient(
+    to right,
+    #192952,
+    rgba(0, 0, 0, 0)
+  ); /* Gradient from black to transparent */
+  pointer-events: none; /* Allow clicks to pass through the overlay */
+}
 
 .draggable-component {
   opacity: 1;
   transition: opacity 0.1s ease-in-out;
 }
 
-.draggable-component:active{
+.draggable-component:active {
   opacity: 0.5; /* Adjust opacity as needed */
 }
