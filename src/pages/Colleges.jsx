@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TbFilterPlus } from "react-icons/tb";
 import FeaturesCard from "../components/FeaturesCard";
 import CollegeCard from "../components/CollegeCard";
@@ -6,8 +6,10 @@ import BarChart from "../components/BarChart";
 import Button from "../components/Button";
 import BlurSSImage from "../assets/blurSS.png";
 import Modal from "../components/Modal";
+import { useNavigate } from "react-router-dom";
 
-const Colleges = () => {
+const Colleges = ({ eligibleColleges }) => {
+  const navigate = useNavigate();
   const [choices, setChoices] = useState([
     "College Life",
     "Placement",
@@ -23,22 +25,6 @@ const Colleges = () => {
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
-
-  const colleges = [
-    { name: "IIT Bombay", branch: "Computer Science and Engineering" },
-    { name: "IIT Delhi", branch: "Electrical Engineering" },
-    { name: "IIT Madras", branch: "Mechanical Engineering" },
-    { name: "IIT Kanpur", branch: "Civil Engineering" },
-    { name: "IIT Kharagpur", branch: "Chemical Engineering" },
-    { name: "IIT Roorkee", branch: "Biotechnology" },
-    { name: "IIT Guwahati", branch: "Aerospace Engineering" },
-    {
-      name: "IIT Hyderabad",
-      branch: "Metallurgical and Materials Engineering",
-    },
-    { name: "IIT Gandhinagar", branch: "Environmental Engineering" },
-    { name: "IIT Indore", branch: "Computer Science and Engineering" },
-  ];
 
   const [selected, setSelected] = useState([]);
 
@@ -59,6 +45,12 @@ const Colleges = () => {
 
     setChoices(newItems);
   };
+
+  useEffect(() => {
+    if (eligibleColleges.length === 0) {
+      navigate("/");
+    }
+  }, [eligibleColleges, navigate]);
 
   return (
     <div className="flex h-screen w-screen overflow-x-hidden">
@@ -94,10 +86,10 @@ const Colleges = () => {
           Top 10 colleges according to your prefrences
         </span>
         <div className="h-[85%] w-[80%] bg-gray-100 m-auto rounded-2xl shadow-inner-new p-5 overflow-y-scroll">
-          {colleges.map((ele, index) => (
+          {eligibleColleges.map((ele, index) => (
             <CollegeCard
-              collegeName={ele.name}
-              collegeBranch={ele.branch}
+              collegeName={ele.Institute}
+              collegeBranch={ele.Department}
               index={index + 1}
               key={index}
             />
@@ -111,9 +103,9 @@ const Colleges = () => {
             id="colleges"
             className="outline-none p-2 m-4 rounded-xl w-[50%]"
           >
-            {colleges.map((college, index) => (
-              <option value={college.name} key={index}>
-                {college.name}
+            {eligibleColleges.map((college, index) => (
+              <option value={college.Institute} key={index}>
+                {college.Institute}
               </option>
             ))}
           </select>
@@ -128,9 +120,9 @@ const Colleges = () => {
               id="colleges"
               className="outline-none p-2 rounded-xl w-[100%]"
             >
-              {colleges.map((college, index) => (
-                <option value={college.name} key={index}>
-                  {college.name}
+              {eligibleColleges.map((college, index) => (
+                <option value={college.Institute} key={index}>
+                  {college.Institute}
                 </option>
               ))}
             </select>
@@ -142,9 +134,9 @@ const Colleges = () => {
               id="colleges"
               className="outline-none p-2 rounded-xl w-[100%]"
             >
-              {colleges.map((college, index) => (
-                <option value={college.name} key={index}>
-                  {college.name}
+              {eligibleColleges.map((college, index) => (
+                <option value={college.Institute} key={index}>
+                  {college.Institute}
                 </option>
               ))}
             </select>

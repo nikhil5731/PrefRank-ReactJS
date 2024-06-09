@@ -9,15 +9,20 @@ const CollegeCard = ({ collegeName, collegeBranch, index }) => {
       to={"/" + collegeName}
       className="w-full h-[20%] rounded-3xl mb-2 flex overflow-hidden drop-shadow-2xl"
     >
-      <div className="w-1/2 h-full bg-black text-white flex items-center pl-5 gap-5">
+      <div className="w-[60%] h-full bg-black text-white flex items-center pl-5 gap-5">
         <span className=" rounded-full p-5 bg-white w-5 h-5 text-black flex justify-center items-center font-bold">
           {index}
         </span>
-        <div className="flex flex-col">
-          <span className=" text-xl border-b-2 border-dashed pb-1">
-            {collegeName}
+        <div className="flex flex-col w-[150%]">
+          <span className="text-md border-b-2 border-dashed pb-1">
+            {collegeName.length >= 60
+              ? collegeName.slice(0, 60) + "..."
+              : collegeName}
+            {/* {("Lorem ipsum dolor sit, amet consectetur adipisicing elit. mm").length} */}
           </span>
-          <span className=" text-sm italic pt-1">{collegeBranch}</span>
+          <span className="text-[12px] italic pt-1">
+            {collegeBranch.split(" (")[0]}
+          </span>
         </div>
       </div>
       <div
@@ -26,7 +31,7 @@ const CollegeCard = ({ collegeName, collegeBranch, index }) => {
           backgroundPosition: "center",
           backgroundSize: "cover",
         }}
-        className="w-1/2 h-full overlayGradient relative"
+        className="w-[40%] h-full overlayGradient relative"
       ></div>
     </Link>
   );

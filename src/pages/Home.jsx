@@ -3,8 +3,9 @@ import Logo from "../assets/Logo.png";
 import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
 import { FirebaseDB } from "../firebaseConfig";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const Home = () => {
+const Home = ({ setEligibleColleges }) => {
   const navigate = useNavigate();
   const [data, setData] = useState({
     name: "",
@@ -35,9 +36,28 @@ const Home = () => {
           });
           console.log("Success!");
         }
-        navigate("/colleges");
+        if (data.jee && data.quota && data.category && data.air) {
+          const response = await axios.post(
+            `${process.env.REACT_APP_BACKEND_URL}/get-colleges`,
+            {
+              quota: data.quota,
+              categories: data.category,
+              rank: data.air,
+            }
+          );
+          const top10Colleges = response.data
+            .sort((a, b) => a.Opening_Rank_2024 - b.Opening_Rank_2024)
+            .slice(0, 10);
+          setEligibleColleges(top10Colleges);
+          navigate("/colleges");
+        } else {
+          alert("Fill the details!");
+        }
+      } else {
+        alert("Fill the details!");
       }
     } catch (error) {
+      console.log(error);
       alert("Error Occurred!");
     }
   };
@@ -99,8 +119,7 @@ const Home = () => {
           <div className="flex justify-between gap-4">
             <div className="flex flex-col w-full">
               <span className=" text-[#334C8A] font-semibold">
-                Quota{" "}
-                <span className="text-sm font-thin">(for JEE main only:)</span>:
+                Quota:
               </span>
 
               <select
@@ -109,9 +128,9 @@ const Home = () => {
                 className=" rounded-lg p-2 h-[3rem] outline-none w-full text-ellipsis overflow-hidden"
               >
                 <option value="">Choose an option</option>
-                <option value="homeStateMains">JEE Mains - Home State</option>
-                <option value="allIndiaMains">JEE Mains - All India</option>
-                <option value="allIndiaAdv">JEE Advanced</option>
+                <option value="HS">JEE Mains - Home State</option>
+                <option value="OS">JEE Mains - Other India</option>
+                <option value="AI">JEE Advanced</option>
               </select>
             </div>
             <div className="flex flex-col w-full">
@@ -123,10 +142,27 @@ const Home = () => {
                 className=" rounded-lg p-2 h-[3rem] outline-none w-full text-ellipsis overflow-hidden"
               >
                 <option value="">Choose an option</option>
-                <option value="general">General</option>
-                <option value="obcNcl">OBC NCL</option>
-                <option value="scst">SC/ST</option>
-                <option value="female">Female</option>
+                <option value="OPEN-Gender-Neutral">OPEN-Gender-Neutral</option>
+                <option value="OPEN-Female-only (including Supernumerary)">
+                  OPEN-Female-only (including Supernumerary)
+                </option>
+                <option value="OPEN (PwD)-Gender-Neutral">
+                  OPEN (PwD)-Gender-Neutral
+                </option>
+                <option value="OBC-NCL-Gender-Neutral">
+                  OBC-NCL-Gender-Neutral
+                </option>
+                <option value="OBC-NCL-Female-only (including Supernumerary)">
+                  OBC-NCL-Female-only (including Supernumerary)
+                </option>
+                <option value="SC-Gender-Neutral">SC-Gender-Neutral</option>
+                <option value="SC-Female-only (including Supernumerary)">
+                  SC-Female-only (including Supernumerary)
+                </option>
+                <option value="ST-Gender-Neutral">ST-Gender-Neutral</option>
+                <option value="ST-Female-only (including Supernumerary)">
+                  ST-Female-only (including Supernumerary)
+                </option>
               </select>
             </div>
           </div>

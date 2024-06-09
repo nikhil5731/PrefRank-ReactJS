@@ -8,14 +8,24 @@ import CollegeDetails from "./pages/CollegeDetails";
 
 function App() {
   const [videoClicked, setVideoClicked] = useState(false);
+  const [eligibleColleges, setEligibleColleges] = useState([]);
 
   const handleVideoClick = () => {
     setVideoClicked(true);
   };
   return (
     <Routes>
-      <Route path="/" element={!videoClicked ? <Video handleVideoClick={handleVideoClick}/> : <Home />} />
-      <Route path="/colleges" element={<Colleges />} />
+      <Route
+        path="/"
+        element={
+          !videoClicked ? (
+            <Video handleVideoClick={handleVideoClick} />
+          ) : (
+            <Home setEligibleColleges={setEligibleColleges} />
+          )
+        }
+      />
+      <Route path="/colleges" element={<Colleges eligibleColleges={eligibleColleges}/>} />
       <Route path="/:id" element={<CollegeDetails />} />
     </Routes>
   );
