@@ -118,19 +118,23 @@ const Home = ({ setEligibleColleges }) => {
           </div>
           <div className="flex justify-between gap-4">
             <div className="flex flex-col w-full">
-              <span className=" text-[#334C8A] font-semibold">
-                Quota:
-              </span>
+              <span className=" text-[#334C8A] font-semibold">Quota:</span>
 
               <select
                 name="quota"
                 onChange={handleOnChange}
                 className=" rounded-lg p-2 h-[3rem] outline-none w-full text-ellipsis overflow-hidden"
+                disabled={data.jee === ""}
               >
                 <option value="">Choose an option</option>
-                <option value="HS">JEE Mains - Home State</option>
-                <option value="OS">JEE Mains - Other India</option>
-                <option value="AI">JEE Advanced</option>
+                {data.jee === "jeeMains" ? (
+                  <>
+                    <option value="HS">JEE Mains - Home State</option>
+                    <option value="OS">JEE Mains - Other India</option>
+                  </>
+                ) : (
+                  <option value="AI">JEE Advanced - All India</option>
+                )}
               </select>
             </div>
             <div className="flex flex-col w-full">
@@ -140,6 +144,7 @@ const Home = ({ setEligibleColleges }) => {
                 name="category"
                 onChange={handleOnChange}
                 className=" rounded-lg p-2 h-[3rem] outline-none w-full text-ellipsis overflow-hidden"
+                disabled={data.jee === ""}
               >
                 <option value="">Choose an option</option>
                 <option value="OPEN-Gender-Neutral">OPEN-Gender-Neutral</option>
