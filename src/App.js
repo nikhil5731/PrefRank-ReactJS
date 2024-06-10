@@ -9,6 +9,7 @@ import CollegeDetails from "./pages/CollegeDetails";
 function App() {
   const [videoClicked, setVideoClicked] = useState(false);
   const [eligibleColleges, setEligibleColleges] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleVideoClick = () => {
     setVideoClicked(true);
@@ -21,11 +22,18 @@ function App() {
           !videoClicked ? (
             <Video handleVideoClick={handleVideoClick} />
           ) : (
-            <Home setEligibleColleges={setEligibleColleges} />
+            <Home
+              setEligibleColleges={setEligibleColleges}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+            />
           )
         }
       />
-      <Route path="/colleges" element={<Colleges eligibleColleges={eligibleColleges}/>} />
+      <Route
+        path="/colleges"
+        element={<Colleges eligibleColleges={eligibleColleges} />}
+      />
       <Route path="/:id" element={<CollegeDetails />} />
     </Routes>
   );

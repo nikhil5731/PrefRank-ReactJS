@@ -3,9 +3,10 @@ import Logo from "../assets/Logo.png";
 import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
 import { FirebaseDB } from "../firebaseConfig";
 import { useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
 import axios from "axios";
 
-const Home = ({ setEligibleColleges }) => {
+const Home = ({ setEligibleColleges, isLoading, setIsLoading }) => {
   const navigate = useNavigate();
   const [data, setData] = useState({
     name: "",
@@ -21,6 +22,7 @@ const Home = ({ setEligibleColleges }) => {
     setData({ ...data, [name]: value });
   };
   const handleSubmit = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     try {
       if (data.name && data.email) {
@@ -59,6 +61,8 @@ const Home = ({ setEligibleColleges }) => {
     } catch (error) {
       console.log(error);
       alert("Error Occurred!");
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -185,12 +189,18 @@ const Home = ({ setEligibleColleges }) => {
               />
             </div>
           </div>
-          <button
-            type="submit"
-            className="bg-[#334C8A] text-white p-5 w-full lg:w-[70%] md:w-[80%] m-auto rounded-full text-xl"
-          >
-            Predict College
-          </button>
+          {isLoading ? (
+            <div className="flex justify-center bg-[#334C8A] text-white p-5 w-full lg:w-[70%] md:w-[80%] m-auto rounded-full text-xl">
+              <Loader/>
+            </div>
+          ) : (
+            <button
+              type="submit"
+              className="bg-[#334C8A] text-white p-5 w-full lg:w-[70%] md:w-[80%] m-auto rounded-full text-xl"
+            >
+              Predict College
+            </button>
+          )}
         </form>
       </div>
     </div>
