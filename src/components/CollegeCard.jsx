@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const CollegeCard = ({ collegeName, collegeBranch, index }) => {
   const imageUrl =
-    "https://s3-alpha-sig.figma.com/img/a23e/4f38/4b97ea138ef51b12016531552e24d1b5?Expires=1719187200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=G3-4gGERADAzXMg3V9yIRjgOR2rVOl8eEoFelFbT~xeyPgkthvqiGJs0iViyueAKERb6cQcFwV-ivw9gxj5NflL75VHx7BNDGDgv3V3bEHToDIupFaReTZgY7gFkQlMRAXp3iHOBAjQF9s7IzVCST8hQok-0-jE6eXStrFoWR4uAK7payT32smn7RWR1jITt-SBD1LVwNZEEk-YkivoeQQ7CC-FsrC9Sf-XkIgtJrd6K0HUSnChrRlXI5ZpQe2PTN~2WBViEzx-BR0KMqRALUf9piHEzdQ3moabc~IQq00nbaeUg-~DPeP0uKwJXmUaA65ohKV5gK1xkN4fThJbOdg__";
+    "https://s3-alpha-sig.figma.com/img/6836/204d/8cd3702e949f299be228695104300383?Expires=1718582400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=HP9PVVsg0EGtdOHHZhvo4Yq9KatITXSLf5Z2HhDKSoH~W9G6UtPPl76u27V985e9rSgf0M0ALh7qdIspevJkq4kD~T~K2cYt7lEiFI-4C4h8j6HQyfEKo8QJV4D7JDphjk5Zhi5XI7Vl-aw0-7GT-UMJ-aupoJuy5lj1VJiHCOno9lyQWgsRNoXSW6v~w9cuj~7vHQOak8nEyHxlBQ0NRousingNtWWwFFOC7XreDWEdU2zLQZYPXD5K32pc7R2xNab~dQRVGc-NuhtIq24nq1mVwNuJibLonGnomLKIpbxjSFUSrREjJVVtkicRj1yKbXQOykkDED1BpIpEMnv5bw__";
   return (
     <Link
       to={"/" + collegeName}

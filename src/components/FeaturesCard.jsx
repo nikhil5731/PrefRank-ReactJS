@@ -10,7 +10,7 @@ const FeaturesCard = ({
   handleDragOver,
   handleDrop,
 }) => {
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(true);
 
   return (
     <div

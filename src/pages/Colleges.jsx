@@ -88,8 +88,8 @@ const Colleges = ({ eligibleColleges }) => {
         <div className="h-[85%] w-[80%] bg-gray-100 m-auto rounded-2xl shadow-inner-new p-5 overflow-y-scroll">
           {eligibleColleges.map((ele, index) => (
             <CollegeCard
-              collegeName={ele.Institute}
-              collegeBranch={ele.Department}
+              collegeName={ele.institute_name}
+              collegeBranch={ele.department}
               index={index + 1}
               key={index}
             />
@@ -104,8 +104,8 @@ const Colleges = ({ eligibleColleges }) => {
             className="outline-none p-2 m-4 rounded-xl w-[50%]"
           >
             {eligibleColleges.map((college, index) => (
-              <option value={college.Institute} key={index}>
-                {college.Institute}
+              <option value={college.institute_name} key={index}>
+                {college.institute_name}
               </option>
             ))}
           </select>
@@ -121,8 +121,8 @@ const Colleges = ({ eligibleColleges }) => {
               className="outline-none p-2 rounded-xl w-[100%]"
             >
               {eligibleColleges.map((college, index) => (
-                <option value={college.Institute} key={index}>
-                  {college.Institute}
+                <option value={college.institute_name} key={index}>
+                  {college.institute_name}
                 </option>
               ))}
             </select>
@@ -135,8 +135,8 @@ const Colleges = ({ eligibleColleges }) => {
               className="outline-none p-2 rounded-xl w-[100%]"
             >
               {eligibleColleges.map((college, index) => (
-                <option value={college.Institute} key={index}>
-                  {college.Institute}
+                <option value={college.institute_name} key={index}>
+                  {college.institute_name}
                 </option>
               ))}
             </select>

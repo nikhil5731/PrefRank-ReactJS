@@ -191,7 +191,7 @@ const Home = ({ setEligibleColleges, isLoading, setIsLoading }) => {
           </div>
           {isLoading ? (
             <div className="flex justify-center bg-[#334C8A] text-white p-5 w-full lg:w-[70%] md:w-[80%] m-auto rounded-full text-xl">
-              <Loader/>
+              <Loader />
             </div>
           ) : (
             <button
