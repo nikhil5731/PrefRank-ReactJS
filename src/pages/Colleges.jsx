@@ -48,6 +48,7 @@ const Colleges = ({ eligibleColleges }) => {
 
   useEffect(() => {
     if (eligibleColleges.length === 0) {
+      alert("No College Found!");
       navigate("/");
     }
   }, [eligibleColleges, navigate]);
