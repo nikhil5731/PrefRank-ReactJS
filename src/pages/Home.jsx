@@ -48,7 +48,11 @@ const Home = ({ setEligibleColleges, isLoading, setIsLoading }) => {
             }
           );
           const top10Colleges = response.data
-            .sort((a, b) => a.Opening_Rank_2024 - b.Opening_Rank_2024)
+            .sort((a, b) => {
+              const a1 = (a.Opening_Rank_2024 + a.Closing_Rank_2024) / 2;
+              const b1 = (b.Opening_Rank_2024 + b.Closing_Rank_2024) / 2;
+              return a1 - b1;
+            })
             .slice(0, 10);
           setEligibleColleges(top10Colleges);
           navigate("/colleges");

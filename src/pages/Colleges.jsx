@@ -12,11 +12,11 @@ const Colleges = ({ eligibleColleges }) => {
   const navigate = useNavigate();
   const [choices, setChoices] = useState([
     "College Life",
-    "Placement",
+    "Placements",
     "Alumini",
     "Infrastructure",
     "Academic Load",
-    "Accomodation",
+    "Value for Money",
     "Research",
   ]);
 
