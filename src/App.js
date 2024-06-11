@@ -10,6 +10,7 @@ function App() {
   const [videoClicked, setVideoClicked] = useState(false);
   const [eligibleColleges, setEligibleColleges] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [ratings, setRatings] = useState([]);
 
   const handleVideoClick = () => {
     setVideoClicked(true);
@@ -26,13 +27,14 @@ function App() {
               setEligibleColleges={setEligibleColleges}
               isLoading={isLoading}
               setIsLoading={setIsLoading}
+              setRatings={setRatings}
             />
           )
         }
       />
       <Route
         path="/colleges"
-        element={<Colleges eligibleColleges={eligibleColleges} />}
+        element={<Colleges eligibleColleges={eligibleColleges} setEligibleColleges={setEligibleColleges} ratings={ratings}/>}
       />
       <Route path="/:id" element={<CollegeDetails />} />
     </Routes>

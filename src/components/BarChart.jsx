@@ -19,28 +19,29 @@ ChartJS.register(
   Legend
 );
 
-export default function BarChart() {
+export default function BarChart({ seletedCollegeRatings }) {
   const labels = [
-    "College Life",
-    "Placement",
-    "Alumini",
+    "Placements",
+    "Faculty & Course Curriculum",
+    "Value for Money",
     "Infrastructure",
-    "Academic Load",
-    "Accomodation",
-    "Research",
+    "Crowd & Campus Life",
   ];
   const data = {
     labels,
     datasets: [
       {
-        minBarLength:20,
+        minBarLength: 20,
         maxBarThickness: 50,
         barPercentage: 0.7,
 
         label: "Stats",
         data: [
-          4.89546998, 4.82206209, 3.88327817, 1.43458175, 4.14694159,
-          3.60963966, 4.8832994,
+          seletedCollegeRatings["Placements"],
+          seletedCollegeRatings["Faculty & Course Curriculum"],
+          seletedCollegeRatings["Value for Money"],
+          seletedCollegeRatings["Infrastructure"],
+          seletedCollegeRatings["Crowd & Campus Life"],
         ],
         backgroundColor: "#334C8A",
       },

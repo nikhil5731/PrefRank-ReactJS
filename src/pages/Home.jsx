@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
 import axios from "axios";
 
-const Home = ({ setEligibleColleges, isLoading, setIsLoading }) => {
+const Home = ({ setEligibleColleges, isLoading, setIsLoading, setRatings }) => {
   const navigate = useNavigate();
   const [data, setData] = useState({
     name: "",
@@ -45,16 +45,29 @@ const Home = ({ setEligibleColleges, isLoading, setIsLoading }) => {
               quota: data.quota,
               categories: data.category,
               rank: data.air,
+              jee: data.jee,
             }
           );
-          const top10Colleges = response.data
-            .sort((a, b) => {
-              const a1 = (a.Opening_Rank_2024 + a.Closing_Rank_2024) / 2;
-              const b1 = (b.Opening_Rank_2024 + b.Closing_Rank_2024) / 2;
-              return a1 - b1;
-            })
-            .slice(0, 10);
-          setEligibleColleges(top10Colleges);
+          const topColleges = response.data.sort((a, b) => {
+            const rating1 = a.overallRating;
+            const rating2 = b.overallRating;
+            const avg1 = (a.Opening_Rank_2024 + a.Closing_Rank_2024) / 2;
+            const avg2 = (b.Opening_Rank_2024 + b.Closing_Rank_2024) / 2;
+            const priorityScore1 = rating1 / avg1;
+            const priorityScore2 = rating2 / avg2;
+            return priorityScore2 - priorityScore1;
+          });
+          const temp = topColleges.map((college) => {
+            return college.institute_name;
+          });
+          const ratings = await axios.post(
+            `${process.env.REACT_APP_BACKEND_URL}/get-ratings`,
+            {
+              colleges: temp,
+            }
+          );
+          setEligibleColleges(topColleges);
+          setRatings(ratings.data);
           navigate("/colleges");
         } else {
           alert("Fill the details!");
@@ -119,8 +132,8 @@ const Home = ({ setEligibleColleges, isLoading, setIsLoading }) => {
                 className=" rounded-lg p-2 h-[3rem] outline-none"
               >
                 <option value="">Choose an option</option>
-                <option value="jeeMains">JEE Mains</option>
-                <option value="jeeAdvanced">JEE Advanced</option>
+                <option value="Mains">JEE Mains</option>
+                <option value="Advanced">JEE Advanced</option>
               </select>
             </div>
           </div>
@@ -135,7 +148,7 @@ const Home = ({ setEligibleColleges, isLoading, setIsLoading }) => {
                 disabled={data.jee === ""}
               >
                 <option value="">Choose an option</option>
-                {data.jee === "jeeMains" ? (
+                {data.jee === "Mains" ? (
                   <>
                     <option value="HS">JEE Mains - Home State</option>
                     <option value="OS">JEE Mains - Other India</option>

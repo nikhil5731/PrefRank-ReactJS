@@ -8,17 +8,27 @@ import BlurSSImage from "../assets/blurSS.png";
 import Modal from "../components/Modal";
 import { useNavigate } from "react-router-dom";
 
-const Colleges = ({ eligibleColleges }) => {
+const Colleges = ({ eligibleColleges, setEligibleColleges, ratings }) => {
   const navigate = useNavigate();
   const [choices, setChoices] = useState([
-    "College Life",
     "Placements",
-    "Alumini",
-    "Infrastructure",
-    "Academic Load",
+    "Faculty & Course Curriculum",
     "Value for Money",
-    "Research",
+    "Infrastructure",
+    "Crowd & Campus Life",
   ]);
+  const [isCheck, setIsCheck] = useState({
+    Placements: true,
+    "Faculty & Course Curriculum": true,
+    "Value for Money": true,
+    Infrastructure: true,
+    "Crowd & Campus Life": true,
+  });
+
+  const [seletedCollegeRatings, setSelectedCollegeRatings] = useState(
+    ratings[0]
+  );
+  const weights = [1, 0.8, 0.6, 0.4, 0.2];
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -45,6 +55,50 @@ const Colleges = ({ eligibleColleges }) => {
 
     setChoices(newItems);
   };
+
+  useEffect(() => {}, []);
+
+  useEffect(() => {
+    let tempColleges = eligibleColleges.map((college) => {
+      let collegeName = college.institute_name;
+      let newscore = 0;
+      const ratingsArray = ratings.find(
+        (item) =>
+          item.Institute?.split("(")[1]?.split(")")[0].toLowerCase() ===
+            collegeName?.split("(")[1]?.split(")")[0].toLowerCase() ||
+          item.Institute?.split(" (")[0].toLowerCase() ===
+            collegeName?.split(" (")[0].toLowerCase()
+      );
+      if (ratingsArray) {
+        newscore =
+          (ratingsArray[choices[0]] * weights[0] * isCheck[choices[0]] +
+            ratingsArray[choices[1]] * weights[1] * isCheck[choices[1]] +
+            ratingsArray[choices[2]] * weights[2] * isCheck[choices[2]] +
+            ratingsArray[choices[3]] * weights[3] * isCheck[choices[3]] +
+            ratingsArray[choices[4]] * weights[4] * isCheck[choices[4]]) /
+          (weights[0] * isCheck[choices[0]] +
+            weights[1] * isCheck[choices[1]] +
+            weights[2] * isCheck[choices[2]] +
+            weights[3] * isCheck[choices[3]] +
+            weights[4] * isCheck[choices[4]]);
+        return { ...college, overallRating: parseFloat(newscore) };
+      }
+      return college;
+    });
+    tempColleges
+      .sort((a, b) => {
+        const rating1 = a.overallRating || 0;
+        const rating2 = b.overallRating || 0;
+        const avg1 = (a.Opening_Rank_2024 + a.Closing_Rank_2024) / 2;
+        const avg2 = (b.Opening_Rank_2024 + b.Closing_Rank_2024) / 2;
+        const priorityScore1 = rating1 / avg1;
+        const priorityScore2 = rating2 / avg2;
+        return priorityScore2 - priorityScore1;
+      })
+      .slice(0, 10);
+
+    setEligibleColleges(tempColleges);
+  }, [choices, isCheck]);
 
   useEffect(() => {
     if (eligibleColleges.length === 0) {
@@ -77,6 +131,8 @@ const Colleges = ({ eligibleColleges }) => {
                 handleDragStart={handleDragStart}
                 handleDragOver={handleDragOver}
                 handleDrop={handleDrop}
+                isChecked={isCheck}
+                setIsChecked={setIsCheck}
               />
             </div>
           ))}
@@ -87,7 +143,7 @@ const Colleges = ({ eligibleColleges }) => {
           Top 10 colleges according to your prefrences
         </span>
         <div className="h-[85%] w-[80%] bg-gray-100 m-auto rounded-2xl shadow-inner-new p-5 overflow-y-scroll">
-          {eligibleColleges.map((ele, index) => (
+          {eligibleColleges.slice(0, 10).map((ele, index) => (
             <CollegeCard
               collegeName={ele.institute_name}
               collegeBranch={ele.department}
@@ -103,6 +159,18 @@ const Colleges = ({ eligibleColleges }) => {
             name="colleges"
             id="colleges"
             className="outline-none p-2 m-4 rounded-xl w-[50%]"
+            defaultValue={seletedCollegeRatings.Institute}
+            onChange={(e) => {
+              const collegeName = e.target.value;
+              const ratingsArray = ratings.find(
+                (item) =>
+                  item.Institute?.split("(")[1]?.split(")")[0].toLowerCase() ===
+                    collegeName?.split("(")[1]?.split(")")[0].toLowerCase() ||
+                  item.Institute?.split(" (")[0].toLowerCase() ===
+                    collegeName?.split(" (")[0].toLowerCase()
+              );
+              setSelectedCollegeRatings(ratingsArray);
+            }}
           >
             {eligibleColleges.map((college, index) => (
               <option value={college.institute_name} key={index}>
@@ -110,7 +178,7 @@ const Colleges = ({ eligibleColleges }) => {
               </option>
             ))}
           </select>
-          <BarChart />
+          <BarChart seletedCollegeRatings={seletedCollegeRatings} />
         </div>
         <div className="bg-[#C4DAFF] flex flex-col gap-2 h-fit rounded-xl drop-shadow-lg border mt-5 px-5 py-3">
           <span className="italic w-fit m-auto mb-2">Compare two Colleges</span>
