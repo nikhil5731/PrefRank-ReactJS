@@ -8,7 +8,14 @@ import BlurSSImage from "../assets/blurSS.png";
 import Modal from "../components/Modal";
 import { useNavigate } from "react-router-dom";
 
-const Colleges = ({ eligibleColleges, setEligibleColleges, ratings }) => {
+const Colleges = ({
+  eligibleColleges,
+  setEligibleColleges,
+  ratings,
+  branches,
+  states,
+  uniqueColleges,
+}) => {
   const navigate = useNavigate();
   const [choices, setChoices] = useState([
     "Placements",
@@ -24,7 +31,7 @@ const Colleges = ({ eligibleColleges, setEligibleColleges, ratings }) => {
     Infrastructure: true,
     "Crowd & Campus Life": true,
   });
-
+  const [viewColleges, setViewColleges] = useState([]);
   const [seletedCollegeRatings, setSelectedCollegeRatings] = useState(
     ratings[0]
   );
@@ -36,7 +43,10 @@ const Colleges = ({ eligibleColleges, setEligibleColleges, ratings }) => {
     setIsOpen(!isOpen);
   };
 
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState({
+    states: [],
+    branches: [],
+  });
 
   const handleDragStart = (e, index) => {
     e.dataTransfer.setData("index", index);
@@ -56,7 +66,25 @@ const Colleges = ({ eligibleColleges, setEligibleColleges, ratings }) => {
     setChoices(newItems);
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    let tempColleges = eligibleColleges;
+
+    if (selected.states.length > 0) {
+      tempColleges = tempColleges.filter((college) =>
+        selected.states.includes(college.State)
+      );
+    }
+
+    if (selected.branches.length > 0) {
+      tempColleges = tempColleges.filter((college) =>
+        selected.branches.includes(college.department)
+      );
+    }
+
+    tempColleges = tempColleges.slice(0, 10);
+
+    setViewColleges(tempColleges);
+  }, [eligibleColleges, selected]);
 
   useEffect(() => {
     let tempColleges = eligibleColleges.map((college) => {
@@ -85,17 +113,15 @@ const Colleges = ({ eligibleColleges, setEligibleColleges, ratings }) => {
       }
       return college;
     });
-    tempColleges
-      .sort((a, b) => {
-        const rating1 = a.overallRating || 0;
-        const rating2 = b.overallRating || 0;
-        const avg1 = (a.Opening_Rank_2024 + a.Closing_Rank_2024) / 2;
-        const avg2 = (b.Opening_Rank_2024 + b.Closing_Rank_2024) / 2;
-        const priorityScore1 = rating1 / avg1;
-        const priorityScore2 = rating2 / avg2;
-        return priorityScore2 - priorityScore1;
-      })
-      .slice(0, 10);
+    tempColleges.sort((a, b) => {
+      const rating1 = a.overallRating || 0;
+      const rating2 = b.overallRating || 0;
+      const avg1 = (a.Opening_Rank_2024 + a.Closing_Rank_2024) / 2;
+      const avg2 = (b.Opening_Rank_2024 + b.Closing_Rank_2024) / 2;
+      const priorityScore1 = rating1 / avg1;
+      const priorityScore2 = rating2 / avg2;
+      return priorityScore2 - priorityScore1;
+    });
 
     setEligibleColleges(tempColleges);
   }, [choices, isCheck]);
@@ -143,7 +169,7 @@ const Colleges = ({ eligibleColleges, setEligibleColleges, ratings }) => {
           Top 10 colleges according to your prefrences
         </span>
         <div className="h-[85%] w-[80%] bg-gray-100 m-auto rounded-2xl shadow-inner-new p-5 overflow-y-scroll">
-          {eligibleColleges.slice(0, 10).map((ele, index) => (
+          {viewColleges.map((ele, index) => (
             <CollegeCard
               collegeName={ele.institute_name}
               collegeBranch={ele.department}
@@ -172,9 +198,9 @@ const Colleges = ({ eligibleColleges, setEligibleColleges, ratings }) => {
               setSelectedCollegeRatings(ratingsArray);
             }}
           >
-            {eligibleColleges.map((college, index) => (
-              <option value={college.institute_name} key={index}>
-                {college.institute_name}
+            {uniqueColleges.map((college, index) => (
+              <option value={college} key={index}>
+                {college}
               </option>
             ))}
           </select>
@@ -189,9 +215,9 @@ const Colleges = ({ eligibleColleges, setEligibleColleges, ratings }) => {
               id="colleges"
               className="outline-none p-2 rounded-xl w-[100%]"
             >
-              {eligibleColleges.map((college, index) => (
-                <option value={college.institute_name} key={index}>
-                  {college.institute_name}
+              {uniqueColleges.map((college, index) => (
+                <option value={college} key={index}>
+                  {college}
                 </option>
               ))}
             </select>
@@ -203,9 +229,9 @@ const Colleges = ({ eligibleColleges, setEligibleColleges, ratings }) => {
               id="colleges"
               className="outline-none p-2 rounded-xl w-[100%]"
             >
-              {eligibleColleges.map((college, index) => (
-                <option value={college.institute_name} key={index}>
-                  {college.institute_name}
+              {uniqueColleges.map((college, index) => (
+                <option value={college} key={index}>
+                  {college}
                 </option>
               ))}
             </select>
@@ -229,6 +255,8 @@ const Colleges = ({ eligibleColleges, setEligibleColleges, ratings }) => {
           toggleModal={toggleModal}
           selected={selected}
           setSelected={setSelected}
+          branches={branches}
+          states={states}
         />
       )}
     </div>

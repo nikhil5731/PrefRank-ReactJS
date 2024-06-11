@@ -60,7 +60,7 @@ const Home = ({ setEligibleColleges, isLoading, setIsLoading, setRatings }) => {
           let tempColleges = [];
           topColleges.map((college) => {
             if (!tempColleges.includes(college.institute_name)) tempColleges.push(college.institute_name);
-          });
+          }); 
           const ratings = await axios.post(
             `${process.env.REACT_APP_BACKEND_URL}/get-ratings`,
             {
