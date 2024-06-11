@@ -32,9 +32,7 @@ const Colleges = ({
     "Crowd & Campus Life": true,
   });
   const [viewColleges, setViewColleges] = useState([]);
-  const [seletedCollegeRatings, setSelectedCollegeRatings] = useState(
-    ratings[0]
-  );
+  const [seletedCollegeRatings, setSelectedCollegeRatings] = useState({});
   const weights = [1, 0.8, 0.6, 0.4, 0.2];
 
   const [isOpen, setIsOpen] = useState(false);
@@ -67,71 +65,81 @@ const Colleges = ({
   };
 
   useEffect(() => {
-    let tempColleges = eligibleColleges;
-
-    if (selected.states.length > 0) {
-      tempColleges = tempColleges.filter((college) =>
-        selected.states.includes(college.State)
-      );
+    if (ratings.length > 0) {
+      setSelectedCollegeRatings(ratings[0]);
     }
-
-    if (selected.branches.length > 0) {
-      tempColleges = tempColleges.filter((college) =>
-        selected.branches.includes(college.department)
-      );
-    }
-
-    tempColleges = tempColleges.slice(0, 10);
-
-    setViewColleges(tempColleges);
-  }, [eligibleColleges, selected]);
+  }, [ratings]);
 
   useEffect(() => {
-    let tempColleges = eligibleColleges.map((college) => {
-      let collegeName = college.institute_name;
-      let newscore = 0;
-      const ratingsArray = ratings.find(
-        (item) =>
-          item.Institute?.split("(")[1]?.split(")")[0].toLowerCase() ===
-            collegeName?.split("(")[1]?.split(")")[0].toLowerCase() ||
-          item.Institute?.split(" (")[0].toLowerCase() ===
-            collegeName?.split(" (")[0].toLowerCase()
-      );
-      if (ratingsArray) {
-        newscore =
-          (ratingsArray[choices[0]] * weights[0] * isCheck[choices[0]] +
-            ratingsArray[choices[1]] * weights[1] * isCheck[choices[1]] +
-            ratingsArray[choices[2]] * weights[2] * isCheck[choices[2]] +
-            ratingsArray[choices[3]] * weights[3] * isCheck[choices[3]] +
-            ratingsArray[choices[4]] * weights[4] * isCheck[choices[4]]) /
-          (weights[0] * isCheck[choices[0]] +
-            weights[1] * isCheck[choices[1]] +
-            weights[2] * isCheck[choices[2]] +
-            weights[3] * isCheck[choices[3]] +
-            weights[4] * isCheck[choices[4]]);
-        return { ...college, overallRating: parseFloat(newscore) };
-      }
-      return college;
-    });
-    tempColleges.sort((a, b) => {
-      const rating1 = a.overallRating || 0;
-      const rating2 = b.overallRating || 0;
-      const avg1 = (a.Opening_Rank_2024 + a.Closing_Rank_2024) / 2;
-      const avg2 = (b.Opening_Rank_2024 + b.Closing_Rank_2024) / 2;
-      const priorityScore1 = rating1 / avg1;
-      const priorityScore2 = rating2 / avg2;
-      return priorityScore2 - priorityScore1;
-    });
-
-    setEligibleColleges(tempColleges);
-  }, [choices, isCheck]);
-
-  useEffect(() => {
-    if (eligibleColleges.length === 0) {
+    if (eligibleColleges.length <= 0) {
       alert("No College Found!");
       navigate("/");
     }
   }, [eligibleColleges, navigate]);
+
+  useEffect(() => {
+    if (eligibleColleges) {
+      let tempColleges = eligibleColleges;
+
+      if (selected.states.length > 0) {
+        tempColleges = tempColleges.filter((college) =>
+          selected.states.includes(college.State)
+        );
+      }
+
+      if (selected.branches.length > 0) {
+        tempColleges = tempColleges.filter((college) =>
+          selected.branches.includes(college.department)
+        );
+      }
+
+      tempColleges = tempColleges.slice(0, 10);
+
+      setViewColleges(tempColleges);
+    }
+  }, [eligibleColleges, selected]);
+
+  useEffect(() => {
+    if (eligibleColleges.length > 0 && ratings.length > 0) {
+      let tempColleges = eligibleColleges.map((college) => {
+        let collegeName = college.institute_name;
+        let newscore = 0;
+        const ratingsArray = ratings.find(
+          (item) =>
+            item.Institute?.split("(")[1]?.split(")")[0].toLowerCase() ===
+              collegeName?.split("(")[1]?.split(")")[0].toLowerCase() ||
+            item.Institute?.split(" (")[0].toLowerCase() ===
+              collegeName?.split(" (")[0].toLowerCase()
+        );
+        if (ratingsArray) {
+          newscore =
+            (ratingsArray[choices[0]] * weights[0] * isCheck[choices[0]] +
+              ratingsArray[choices[1]] * weights[1] * isCheck[choices[1]] +
+              ratingsArray[choices[2]] * weights[2] * isCheck[choices[2]] +
+              ratingsArray[choices[3]] * weights[3] * isCheck[choices[3]] +
+              ratingsArray[choices[4]] * weights[4] * isCheck[choices[4]]) /
+            (weights[0] * isCheck[choices[0]] +
+              weights[1] * isCheck[choices[1]] +
+              weights[2] * isCheck[choices[2]] +
+              weights[3] * isCheck[choices[3]] +
+              weights[4] * isCheck[choices[4]]);
+          return { ...college, overallRating: parseFloat(newscore) };
+        }
+        return college;
+      });
+      tempColleges.sort((a, b) => {
+        const rating1 = a.overallRating || 0;
+        const rating2 = b.overallRating || 0;
+        const avg1 = (a.Opening_Rank_2024 + a.Closing_Rank_2024) / 2;
+        const avg2 = (b.Opening_Rank_2024 + b.Closing_Rank_2024) / 2;
+        const priorityScore1 = rating1 / avg1;
+        const priorityScore2 = rating2 / avg2;
+        return priorityScore2 - priorityScore1;
+      });
+
+      setEligibleColleges(tempColleges);
+    }
+  }, [choices, isCheck]);
 
   return (
     <div className="flex h-screen w-screen overflow-x-hidden">

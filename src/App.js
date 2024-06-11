@@ -5,10 +5,13 @@ import Home from "./pages/Home";
 import { Route, Routes } from "react-router-dom";
 import Video from "./components/Video";
 import CollegeDetails from "./pages/CollegeDetails";
+import axios from "axios";
 
 function App() {
   const [videoClicked, setVideoClicked] = useState(false);
-  const [eligibleColleges, setEligibleColleges] = useState([]);
+  const [eligibleColleges, setEligibleColleges] = useState(
+    JSON.parse(localStorage.getItem("eligibleColleges")) || []
+  );
   const [uniqueColleges, setuniqueColleges] = useState([]);
   const [branches, setBranches] = useState([]);
   const [states, setStates] = useState([]);
@@ -20,11 +23,36 @@ function App() {
   };
 
   useEffect(() => {
+    localStorage.setItem("eligibleColleges", JSON.stringify(eligibleColleges));
+  }, [eligibleColleges]);
+
+  useEffect(() => {
+    const getRatings = async () => {
+      let tempColleges = [];
+      eligibleColleges.forEach((college) => {
+        if (!tempColleges.includes(college.institute_name))
+          tempColleges.push(college.institute_name);
+      });
+      const ratings = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/get-ratings`,
+        {
+          colleges: tempColleges,
+        }
+      );
+      setRatings(ratings.data);
+    };
+    getRatings();
+  }, [eligibleColleges]);
+
+  useEffect(() => {
     let tempColleges = [];
     let tempBranches = [];
     let tempStates = [];
-    eligibleColleges.map((college) => {
-      if (college.institute_name && !tempColleges.includes(college.institute_name)) {
+    eligibleColleges.forEach((college) => {
+      if (
+        college.institute_name &&
+        !tempColleges.includes(college.institute_name)
+      ) {
         tempColleges.push(college.institute_name);
       }
       if (college.department && !tempBranches.includes(college.department)) {

@@ -57,18 +57,8 @@ const Home = ({ setEligibleColleges, isLoading, setIsLoading, setRatings }) => {
             const priorityScore2 = rating2 / avg2;
             return priorityScore2 - priorityScore1;
           });
-          let tempColleges = [];
-          topColleges.map((college) => {
-            if (!tempColleges.includes(college.institute_name)) tempColleges.push(college.institute_name);
-          }); 
-          const ratings = await axios.post(
-            `${process.env.REACT_APP_BACKEND_URL}/get-ratings`,
-            {
-              colleges: tempColleges,
-            }
-          );
+          
           setEligibleColleges(topColleges);
-          setRatings(ratings.data);
           navigate("/colleges");
         } else {
           alert("Fill the details!");
