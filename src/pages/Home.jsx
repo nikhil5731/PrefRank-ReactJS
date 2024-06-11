@@ -57,8 +57,9 @@ const Home = ({ setEligibleColleges, isLoading, setIsLoading, setRatings }) => {
             const priorityScore2 = rating2 / avg2;
             return priorityScore2 - priorityScore1;
           });
-          const temp = topColleges.map((college) => {
-            return college.institute_name;
+          let tempColleges = [];
+          topColleges.map((college) => {
+            if (!tempColleges.includes(college.institute_name)) tempColleges.push(college.institute_name);
           });
           const ratings = await axios.post(
             `${process.env.REACT_APP_BACKEND_URL}/get-ratings`,
