@@ -64,7 +64,7 @@ const Home = ({ setEligibleColleges, isLoading, setIsLoading, setRatings }) => {
           const ratings = await axios.post(
             `${process.env.REACT_APP_BACKEND_URL}/get-ratings`,
             {
-              colleges: temp,
+              colleges: tempColleges,
             }
           );
           setEligibleColleges(topColleges);
