@@ -3,10 +3,12 @@ import { IoIosArrowBack } from "react-icons/io";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import CollegeInfo from "../components/CollegeInfo";
+import LoadingScreen from "../assets/loadingScreen.mp4";
 import axios from "axios";
 
 const CollegeDetails = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const { id } = useParams();
   const [selected, setSelected] = useState("College Info");
   const [collegeData, setcollegeData] = useState({
@@ -38,6 +40,7 @@ const CollegeDetails = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const response = await axios.get(
           `${process.env.REACT_APP_BACKEND_URL}/get-college-info?collegeName=${id}`
@@ -48,16 +51,20 @@ const CollegeDetails = () => {
             data = { ...data, [ele]: "Not found!" };
           }
         });
-        console.log(data  )
+        console.log(data);
         setcollegeData(data);
       } catch (error) {
         console.log("Error in fetching College Details!");
+      } finally {
+        setLoading(false);
       }
     };
     fetchData();
   }, []);
 
-  return (
+  return loading ? (
+    <video src={LoadingScreen} className="h-screen w-screen bg-[#bcd4fd]"></video>
+  ) : (
     <div className="bg-[#C4DAFF] h-screen w-screen overflow-hidden">
       {/* Top Header */}
       <div className="w-full h-[15%] mb-2 flex overflow-hidden drop-shadow-2xl">

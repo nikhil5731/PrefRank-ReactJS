@@ -3,7 +3,7 @@ import Logo from "../assets/Logo.png";
 import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
 import { FirebaseDB } from "../firebaseConfig";
 import { useNavigate } from "react-router-dom";
-import Loader from "../components/Loader";
+import LoadingScreen from "../assets/loadingScreen.mp4";
 import axios from "axios";
 
 const Home = ({ setEligibleColleges, isLoading, setIsLoading, setRatings }) => {
@@ -57,7 +57,7 @@ const Home = ({ setEligibleColleges, isLoading, setIsLoading, setRatings }) => {
             const priorityScore2 = rating2 / avg2;
             return priorityScore2 - priorityScore1;
           });
-          
+
           setEligibleColleges(topColleges);
           navigate("/colleges");
         } else {
@@ -73,7 +73,12 @@ const Home = ({ setEligibleColleges, isLoading, setIsLoading, setRatings }) => {
       setIsLoading(false);
     }
   };
-  return (
+  return isLoading ? (
+    <video
+      src={LoadingScreen}
+      className="h-screen w-screen bg-[#bcd4fd]"
+    ></video>
+  ) : (
     <div className="bg-image lg:h-screen w-screen flex flex-col gap-10 lg:gap-0 lg:flex-row justify-between py-10 px-8 lg:px-16">
       <div className="h-fit lg:w-1/2">
         <img src={Logo} alt="" className="m-auto lg:m-0 w-32 lg:w-48 h-fit" />
@@ -197,18 +202,12 @@ const Home = ({ setEligibleColleges, isLoading, setIsLoading, setRatings }) => {
               />
             </div>
           </div>
-          {isLoading ? (
-            <div className="flex justify-center bg-[#334C8A] text-white p-5 w-full lg:w-[70%] md:w-[80%] m-auto rounded-full text-xl">
-              <Loader />
-            </div>
-          ) : (
-            <button
-              type="submit"
-              className="bg-[#334C8A] text-white p-5 w-full lg:w-[70%] md:w-[80%] m-auto rounded-full text-xl"
-            >
-              Predict College
-            </button>
-          )}
+          <button
+            type="submit"
+            className="bg-[#334C8A] text-white p-5 w-full lg:w-[70%] md:w-[80%] m-auto rounded-full text-xl"
+          >
+            Predict College
+          </button>
         </form>
       </div>
     </div>
