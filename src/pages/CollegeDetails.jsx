@@ -51,7 +51,7 @@ const CollegeDetails = () => {
             data = { ...data, [ele]: "Not found!" };
           }
         });
-        console.log(data);
+        // console.log(data);
         setcollegeData(data);
       } catch (error) {
         console.log("Error in fetching College Details!");
@@ -63,7 +63,7 @@ const CollegeDetails = () => {
   }, []);
 
   return loading ? (
-    <video autoPlay muted loop style={{ width: "100%", height: "100%" }}>
+    <video autoPlay muted loop className="bg-[#bdd4fd] h-screen w-screen">
       <source src={LoadingScreen} type="video/mp4" />
       Your browser does not support the video tag.
     </video>

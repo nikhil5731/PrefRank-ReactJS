@@ -162,132 +162,142 @@ const Colleges = ({
   }, [eligibleColleges]);
 
   return (
-    <div className="flex h-screen w-screen overflow-x-hidden">
-      <div className="w-1/4 bg-[#C4DAFF] rounded-2xl drop-shadow-2xl p-5">
-        <div className="flex justify-between border-b-2 border-black pb-5">
-          <h3 className="text-3xl">Features</h3>
-          <TbFilterPlus
-            size={35}
-            className="cursor-pointer font-thin"
-            onClick={toggleModal}
-          />
-        </div>
-        <div className="my-4">
-          {choices?.map((ele, index) => (
-            <div
-              className="flex justify-between gap-4 items-center mb-3"
-              key={index}
-            >
-              <span>{index + 1}.</span>
-              <FeaturesCard
-                title={ele}
-                index={index}
-                handleDragStart={handleDragStart}
-                handleDragOver={handleDragOver}
-                handleDrop={handleDrop}
-                isChecked={isCheck}
-                setIsChecked={setIsCheck}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="w-1/2">
-        <span className="text-center block my-5 italic text-xl font-bold">
-          Top 10 colleges according to your prefrences
-        </span>
-        <div className="h-[85%] w-[80%] bg-gray-100 m-auto rounded-2xl shadow-inner-new p-5 overflow-y-scroll">
-          {viewColleges?.map((ele, index) => (
-            <CollegeCard
-              collegeName={ele.institute_name}
-              collegeBranch={ele.department}
-              index={index + 1}
-              key={index}
+    <>
+      <div className="h-screen w-screen hidden md:flex">
+        <div className="w-1/4 bg-[#C4DAFF] rounded-2xl drop-shadow-2xl p-5">
+          <div className="flex justify-between border-b-2 border-black pb-5">
+            <h3 className="text-3xl">Features</h3>
+            <TbFilterPlus
+              size={35}
+              className="cursor-pointer font-thin"
+              onClick={toggleModal}
             />
-          ))}
+          </div>
+          <div className="my-4 w-full overflow-x-auto">
+            {choices?.map((ele, index) => (
+              <div className="flex items-center gap-3 w-full mb-5" key={index}>
+                <span>{index + 1}.</span>
+                <FeaturesCard
+                  title={ele}
+                  index={index}
+                  handleDragStart={handleDragStart}
+                  handleDragOver={handleDragOver}
+                  handleDrop={handleDrop}
+                  isChecked={isCheck}
+                  setIsChecked={setIsCheck}
+                />
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-      <div className="w-1/4 py-5 pr-5 h-screen overflow-hidden">
-        <div className="bg-[#C4DAFF] p-2 flex flex-col justify-end h-fit rounded-xl drop-shadow-lg border">
-          <select
-            name="colleges"
-            id="colleges"
-            className="outline-none p-2 m-4 rounded-xl w-[50%]"
-            defaultValue={seletedCollegeRatings.Institute}
-            onChange={(e) => {
-              const collegeName = e.target.value;
-              const ratingsArray = ratings.find(
-                (item) =>
-                  item.Institute?.split("(")[1]?.split(")")[0].toLowerCase() ===
-                    collegeName?.split("(")[1]?.split(")")[0].toLowerCase() ||
-                  item.Institute?.split(" (")[0].toLowerCase() ===
-                    collegeName?.split(" (")[0].toLowerCase()
-              );
-              setSelectedCollegeRatings(ratingsArray);
+        <div className="w-1/2">
+          <span className="text-center block my-5 italic text-xl font-bold">
+            Top 10 colleges according to your prefrences
+          </span>
+          <div className="h-[85%] w-[80%] bg-gray-100 m-auto rounded-2xl shadow-inner-new p-5 overflow-y-scroll">
+            {viewColleges?.map((ele, index) => (
+              <CollegeCard
+                collegeName={ele.institute_name}
+                collegeBranch={ele.department}
+                index={index + 1}
+                key={index}
+              />
+            ))}
+          </div>
+        </div>
+        <div className="w-1/4 py-5 pr-5 h-screen overflow-hidden">
+          <div className="bg-[#C4DAFF] p-2 flex flex-col justify-end h-fit rounded-xl drop-shadow-lg border">
+            <select
+              name="colleges"
+              id="colleges"
+              className="outline-none p-2 m-4 rounded-xl w-[50%]"
+              defaultValue={seletedCollegeRatings.Institute}
+              onChange={(e) => {
+                const collegeName = e.target.value;
+                const ratingsArray = ratings.find(
+                  (item) =>
+                    item.Institute?.split("(")[1]
+                      ?.split(")")[0]
+                      .toLowerCase() ===
+                      collegeName?.split("(")[1]?.split(")")[0].toLowerCase() ||
+                    item.Institute?.split(" (")[0].toLowerCase() ===
+                      collegeName?.split(" (")[0].toLowerCase()
+                );
+                setSelectedCollegeRatings(ratingsArray);
+              }}
+            >
+              {uniqueColleges?.map((college, index) => (
+                <option value={college} key={index}>
+                  {college}
+                </option>
+              ))}
+            </select>
+            <BarChart seletedCollegeRatings={seletedCollegeRatings} />
+          </div>
+          <div className="bg-[#C4DAFF] flex flex-col gap-2 h-fit rounded-xl drop-shadow-lg border mt-5 px-5 py-3">
+            <span className="italic w-fit m-auto mb-2">
+              Compare two Colleges
+            </span>
+            <div className="flex items-center gap-3">
+              <span>1.</span>
+              <select
+                name="colleges"
+                id="colleges"
+                className="outline-none p-2 rounded-xl w-[100%]"
+              >
+                {uniqueColleges?.map((college, index) => (
+                  <option value={college} key={index}>
+                    {college}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="flex items-center gap-3">
+              <span>2.</span>
+              <select
+                name="colleges"
+                id="colleges"
+                className="outline-none p-2 rounded-xl w-[100%]"
+              >
+                {uniqueColleges?.map((college, index) => (
+                  <option value={college} key={index}>
+                    {college}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <Button
+              title={"Compare"}
+              handleClick={() => {}}
+              className={"mt-2"}
+            />
+          </div>
+          <div
+            className="bg-[#C4DAFF] h-fit rounded-xl drop-shadow-lg border mt-5 flex flex-col gap-2 py-5"
+            style={{
+              backgroundImage: `url(${BlurSSImage})`,
+              backgroundPosition: "center",
+              backgroundSize: "cover",
             }}
           >
-            {uniqueColleges?.map((college, index) => (
-              <option value={college} key={index}>
-                {college}
-              </option>
-            ))}
-          </select>
-          <BarChart seletedCollegeRatings={seletedCollegeRatings} />
-        </div>
-        <div className="bg-[#C4DAFF] flex flex-col gap-2 h-fit rounded-xl drop-shadow-lg border mt-5 px-5 py-3">
-          <span className="italic w-fit m-auto mb-2">Compare two Colleges</span>
-          <div className="flex items-center gap-3">
-            <span>1.</span>
-            <select
-              name="colleges"
-              id="colleges"
-              className="outline-none p-2 rounded-xl w-[100%]"
-            >
-              {uniqueColleges?.map((college, index) => (
-                <option value={college} key={index}>
-                  {college}
-                </option>
-              ))}
-            </select>
+            <Button title={"Preview"} handleClick={() => {}} className={""} />
+            <Button title={"Download"} handleClick={() => {}} />
           </div>
-          <div className="flex items-center gap-3">
-            <span>2.</span>
-            <select
-              name="colleges"
-              id="colleges"
-              className="outline-none p-2 rounded-xl w-[100%]"
-            >
-              {uniqueColleges?.map((college, index) => (
-                <option value={college} key={index}>
-                  {college}
-                </option>
-              ))}
-            </select>
-          </div>
-          <Button title={"Compare"} handleClick={() => {}} className={"mt-2"} />
         </div>
-        <div
-          className="bg-[#C4DAFF] h-fit rounded-xl drop-shadow-lg border mt-5 flex flex-col gap-2 py-5"
-          style={{
-            backgroundImage: `url(${BlurSSImage})`,
-            backgroundPosition: "center",
-            backgroundSize: "cover",
-          }}
-        >
-          <Button title={"Preview"} handleClick={() => {}} className={""} />
-          <Button title={"Download"} handleClick={() => {}} />
-        </div>
+        {isOpen && (
+          <Modal
+            toggleModal={toggleModal}
+            selected={selected}
+            setSelected={setSelected}
+            branches={branches}
+            states={states}
+          />
+        )}
       </div>
-      {isOpen && (
-        <Modal
-          toggleModal={toggleModal}
-          selected={selected}
-          setSelected={setSelected}
-          branches={branches}
-          states={states}
-        />
-      )}
-    </div>
+      <div className="flex justify-center items-center h-screen bg-gray-200 text-2xl text-center px-5 my-auto md:hidden">
+        Please Use Desktop for better experience!
+      </div>
+    </>
   );
 };
 

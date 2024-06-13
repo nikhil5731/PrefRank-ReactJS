@@ -23,7 +23,7 @@ const FeaturesCard = ({
       onClick={() => {
         setIsChecked({ ...isChecked, [title]: !isChecked[title] });
       }}
-      className="draggable-component flex items-center bg-slate-50 justify-between px-4 py-6 rounded-2xl w-full"
+      className="draggable-component flex items-center bg-slate-50 justify-between px-4 py-6 rounded-2xl w-full overflow-auto"
     >
       <div className="flex gap-3 items-center">
         <input
