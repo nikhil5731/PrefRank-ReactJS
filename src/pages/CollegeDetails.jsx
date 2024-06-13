@@ -62,8 +62,8 @@ const CollegeDetails = () => {
     fetchData();
   }, []);
 
-  return loading ? (
-    <video src={LoadingScreen} className="h-screen w-screen bg-[#bcd4fd]"></video>
+  return !loading ? (
+    <video src={LoadingScreen} className="h-screen w-screen bg-[#bcd4fd]" autoPlay loop></video>
   ) : (
     <div className="bg-[#C4DAFF] h-screen w-screen overflow-hidden">
       {/* Top Header */}

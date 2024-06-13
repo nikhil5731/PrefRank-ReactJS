@@ -77,6 +77,8 @@ const Home = ({ setEligibleColleges, isLoading, setIsLoading, setRatings }) => {
     <video
       src={LoadingScreen}
       className="h-screen w-screen bg-[#bcd4fd]"
+      autoPlay
+      loop
     ></video>
   ) : (
     <div className="bg-image lg:h-screen w-screen flex flex-col gap-10 lg:gap-0 lg:flex-row justify-between py-10 px-8 lg:px-16">
