@@ -21,6 +21,7 @@ const CollegeDetails = () => {
     Placements: "",
     Review: "",
     Cutoff: {},
+    Ratings: {},
   });
 
   const temp = [
@@ -33,7 +34,13 @@ const CollegeDetails = () => {
     "Placements",
     "Review",
   ];
-  const navBar = ["College Info", "Review", "Cutoff", "News", "Scholarship"];
+  const navBar = [
+    "College Info",
+    "Placements",
+    "Cutoff",
+    "Review",
+    "Scholarship",
+  ];
 
   const imageUrl =
     "https://s3-alpha-sig.figma.com/img/6836/204d/8cd3702e949f299be228695104300383?Expires=1718582400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=HP9PVVsg0EGtdOHHZhvo4Yq9KatITXSLf5Z2HhDKSoH~W9G6UtPPl76u27V985e9rSgf0M0ALh7qdIspevJkq4kD~T~K2cYt7lEiFI-4C4h8j6HQyfEKo8QJV4D7JDphjk5Zhi5XI7Vl-aw0-7GT-UMJ-aupoJuy5lj1VJiHCOno9lyQWgsRNoXSW6v~w9cuj~7vHQOak8nEyHxlBQ0NRousingNtWWwFFOC7XreDWEdU2zLQZYPXD5K32pc7R2xNab~dQRVGc-NuhtIq24nq1mVwNuJibLonGnomLKIpbxjSFUSrREjJVVtkicRj1yKbXQOykkDED1BpIpEMnv5bw__";
@@ -45,13 +52,20 @@ const CollegeDetails = () => {
         const response = await axios.get(
           `${process.env.REACT_APP_BACKEND_URL}/get-college-info?collegeName=${id}`
         );
+        const response2 = await axios.post(
+          `${process.env.REACT_APP_BACKEND_URL}/get-ratings`,
+          {
+            colleges: [id],
+          }
+        );
         let data = response.data;
         temp.forEach((ele) => {
           if (!response.data[ele]) {
             data = { ...data, [ele]: "Not found!" };
           }
         });
-        // console.log(data);
+        data = { ...data, Ratings: response2.data[0] || {} };
+        console.log(data);
         setcollegeData(data);
       } catch (error) {
         console.log("Error in fetching College Details!");
