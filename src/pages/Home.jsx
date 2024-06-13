@@ -26,18 +26,18 @@ const Home = ({ setEligibleColleges, isLoading, setIsLoading, setRatings }) => {
     e.preventDefault();
     try {
       if (data.name && data.email) {
-        const usersRef = collection(FirebaseDB, "users");
-        const q = query(usersRef, where("email", "==", data.email));
-        const querySnapshot = await getDocs(q);
+        // const usersRef = collection(FirebaseDB, "users");
+        // const q = query(usersRef, where("email", "==", data.email));
+        // const querySnapshot = await getDocs(q);
 
-        if (querySnapshot.empty) {
-          // If no matching documents are found, add the new document
-          await addDoc(usersRef, {
-            name: data.name,
-            email: data.email,
-          });
-          console.log("Success!");
-        }
+        // if (querySnapshot.empty) {
+        //   // If no matching documents are found, add the new document
+        //   await addDoc(usersRef, {
+        //     name: data.name,
+        //     email: data.email,
+        //   });
+        //   console.log("Success!");
+        // }
         if (data.jee && data.quota && data.category && data.air) {
           const response = await axios.post(
             `${process.env.REACT_APP_BACKEND_URL}/get-colleges`,
