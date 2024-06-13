@@ -27,24 +27,6 @@ function App() {
   }, [eligibleColleges]);
 
   useEffect(() => {
-    const getRatings = async () => {
-      let tempColleges = [];
-      eligibleColleges.forEach((college) => {
-        if (!tempColleges.includes(college.institute_name))
-          tempColleges.push(college.institute_name);
-      });
-      const ratings = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/get-ratings`,
-        {
-          colleges: tempColleges,
-        }
-      );
-      setRatings(ratings.data);
-    };
-    getRatings();
-  }, [eligibleColleges]);
-
-  useEffect(() => {
     let tempColleges = [];
     let tempBranches = [];
     let tempStates = [];
@@ -93,6 +75,7 @@ function App() {
             uniqueColleges={uniqueColleges}
             branches={branches}
             states={states}
+            setRatings={setRatings}
           />
         }
       />

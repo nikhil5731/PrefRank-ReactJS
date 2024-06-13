@@ -7,6 +7,7 @@ import Button from "../components/Button";
 import BlurSSImage from "../assets/blurSS.png";
 import Modal from "../components/Modal";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Colleges = ({
   eligibleColleges,
@@ -15,6 +16,7 @@ const Colleges = ({
   branches,
   states,
   uniqueColleges,
+  setRatings,
 }) => {
   const navigate = useNavigate();
   const [choices, setChoices] = useState([
@@ -101,7 +103,7 @@ const Colleges = ({
 
   useEffect(() => {
     if (eligibleColleges.length > 0 && ratings.length > 0) {
-      let tempColleges = eligibleColleges.map((college) => {
+      let tempColleges = eligibleColleges?.map((college) => {
         let collegeName = college.institute_name;
         let newscore = 0;
         const ratingsArray = ratings.find(
@@ -141,6 +143,24 @@ const Colleges = ({
     }
   }, [choices, isCheck]);
 
+  useEffect(() => {
+    const getRatings = async () => {
+      let tempColleges = [];
+      eligibleColleges.forEach((college) => {
+        if (!tempColleges.includes(college.institute_name))
+          tempColleges.push(college.institute_name);
+      });
+      const ratings = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/get-ratings`,
+        {
+          colleges: tempColleges,
+        }
+      );
+      setRatings(ratings.data);
+    };
+    getRatings();
+  }, [eligibleColleges]);
+
   return (
     <div className="flex h-screen w-screen overflow-x-hidden">
       <div className="w-1/4 bg-[#C4DAFF] rounded-2xl drop-shadow-2xl p-5">
@@ -153,7 +173,7 @@ const Colleges = ({
           />
         </div>
         <div className="my-4">
-          {choices.map((ele, index) => (
+          {choices?.map((ele, index) => (
             <div
               className="flex justify-between gap-4 items-center mb-3"
               key={index}
@@ -177,7 +197,7 @@ const Colleges = ({
           Top 10 colleges according to your prefrences
         </span>
         <div className="h-[85%] w-[80%] bg-gray-100 m-auto rounded-2xl shadow-inner-new p-5 overflow-y-scroll">
-          {viewColleges.map((ele, index) => (
+          {viewColleges?.map((ele, index) => (
             <CollegeCard
               collegeName={ele.institute_name}
               collegeBranch={ele.department}
@@ -206,7 +226,7 @@ const Colleges = ({
               setSelectedCollegeRatings(ratingsArray);
             }}
           >
-            {uniqueColleges.map((college, index) => (
+            {uniqueColleges?.map((college, index) => (
               <option value={college} key={index}>
                 {college}
               </option>
@@ -223,7 +243,7 @@ const Colleges = ({
               id="colleges"
               className="outline-none p-2 rounded-xl w-[100%]"
             >
-              {uniqueColleges.map((college, index) => (
+              {uniqueColleges?.map((college, index) => (
                 <option value={college} key={index}>
                   {college}
                 </option>
@@ -237,7 +257,7 @@ const Colleges = ({
               id="colleges"
               className="outline-none p-2 rounded-xl w-[100%]"
             >
-              {uniqueColleges.map((college, index) => (
+              {uniqueColleges?.map((college, index) => (
                 <option value={college} key={index}>
                   {college}
                 </option>

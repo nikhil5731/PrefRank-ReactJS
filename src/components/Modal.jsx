@@ -80,7 +80,7 @@ const Modal = ({ toggleModal, selected, setSelected, branches, states }) => {
               <div className="w-1/2 h-[90%]">
                 <span className="w-fit m-auto">Select State</span>
                 <div className="bg-[#C4DAFF] h-96 p-5 rounded-xl overflow-y-scroll flex flex-col gap-2">
-                  {states.map((ele, index) => (
+                  {states?.map((ele, index) => (
                     <div
                       className="flex items-center gap-2 cursor-pointer"
                       onClick={() => handleClick(ele, "states")}
@@ -102,7 +102,7 @@ const Modal = ({ toggleModal, selected, setSelected, branches, states }) => {
               <div className="w-1/2 h-[90%]">
                 <span className="w-full m-auto">Select Department</span>
                 <div className="bg-[#C4DAFF] h-96 p-5 rounded-xl overflow-y-scroll flex flex-col gap-2">
-                  {branches.map((ele, index) => (
+                  {branches?.map((ele, index) => (
                     <div
                       className="flex items-center gap-2 cursor-pointer"
                       onClick={() => handleClick(ele, "branches")}
