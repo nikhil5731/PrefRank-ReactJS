@@ -74,12 +74,10 @@ const Home = ({ setEligibleColleges, isLoading, setIsLoading, setRatings }) => {
     }
   };
   return isLoading ? (
-    <video
-      src={LoadingScreen}
-      className="h-screen w-screen bg-[#bcd4fd]"
-      autoPlay
-      loop
-    ></video>
+    <video autoPlay muted loop style={{ width: "100%", height: "100%" }}>
+      <source src={LoadingScreen} type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
   ) : (
     <div className="bg-image lg:h-screen w-screen flex flex-col gap-10 lg:gap-0 lg:flex-row justify-between py-10 px-8 lg:px-16">
       <div className="h-fit lg:w-1/2">

@@ -50,7 +50,7 @@ const CollegeInfo = ({ selected, setSelected, collegeDetails }) => {
             <div key={index} className="text-black font-bold text-xl">
               {index + 1}. {topic}
             </div>
-            <div className="mx-10 mb-5">
+            <div className="mx-5 md:mx-10 mb-5">
               {topic === "Placements" && (
                 <span className="text-lg">{collegeDetails.Placements}</span>
               )}
@@ -66,8 +66,8 @@ const CollegeInfo = ({ selected, setSelected, collegeDetails }) => {
       ></div>
     ),
     Cutoff: (
-      <div className="pb-24">
-        <div className="flex justify-between items-end my-5">
+      <div className="md:pb-24">
+        <div className="flex flex-col md:flex-row justify-between md:items-center gap-4 my-5">
           <h2
             className="text-4xl font-bold"
             onClick={() => console.log(selectedQuota)}
@@ -80,7 +80,7 @@ const CollegeInfo = ({ selected, setSelected, collegeDetails }) => {
               onChange={(e) =>
                 setSelectedQuota({ ...selectedQuota, state: e.target.value })
               }
-              className="text-lg outline-none p-3 border border-black rounded-xl mr-5"
+              className="text-lg outline-none p-3 border border-black rounded-xl mb-3 md:mr-5"
             >
               {["OS", "HS", "AI"].map((ele) => (
                 <>
@@ -118,7 +118,7 @@ const CollegeInfo = ({ selected, setSelected, collegeDetails }) => {
       </div>
     ),
     News: (
-      <div className="py-5 pb-24">
+      <div className="py-5 md:pb-24">
         <div className="mx-auto mb-5 max-w-5xl">
           <h3 className="text-3xl font-bold mx-auto text-center mb-8">
             Recent News:
@@ -145,7 +145,7 @@ const CollegeInfo = ({ selected, setSelected, collegeDetails }) => {
     Scholarship: (
       <div
         dangerouslySetInnerHTML={{ __html: scolarships }}
-        className="bg-white rounded-lg shadow-lg p-6 text-gray-800 text-lg font-semibold pb-24 "
+        className="bg-white rounded-lg shadow-lg p-6 text-gray-800 text-lg font-semibold md:pb-24 "
       ></div>
     ),
   };

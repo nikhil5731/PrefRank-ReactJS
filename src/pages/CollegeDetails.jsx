@@ -46,7 +46,7 @@ const CollegeDetails = () => {
           `${process.env.REACT_APP_BACKEND_URL}/get-college-info?collegeName=${id}`
         );
         let data = response.data;
-        temp.map((ele) => {
+        temp.forEach((ele) => {
           if (!response.data[ele]) {
             data = { ...data, [ele]: "Not found!" };
           }
@@ -63,12 +63,15 @@ const CollegeDetails = () => {
   }, []);
 
   return loading ? (
-    <video src={LoadingScreen} className="h-screen w-screen bg-[#bcd4fd]" autoPlay loop></video>
+    <video autoPlay muted loop style={{ width: "100%", height: "100%" }}>
+      <source src={LoadingScreen} type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
   ) : (
     <div className="bg-[#C4DAFF] h-screen w-screen overflow-hidden">
       {/* Top Header */}
-      <div className="w-full h-[15%] mb-2 flex overflow-hidden drop-shadow-2xl">
-        <div className="w-1/2 h-full bg-[#192952] text-white flex items-center pl-5 gap-5">
+      <div className="w-full h-[10%] md:h-[15%] mb-2 flex overflow-hidden drop-shadow-2xl">
+        <div className="w-full md:w-1/2 h-full bg-[#192952] text-white flex items-center pl-5 gap-5">
           <div className="flex items-center gap-4">
             <IoIosArrowBack
               className="cursor-pointer"
@@ -78,7 +81,7 @@ const CollegeDetails = () => {
               }}
             />
 
-            <span className="text-3xl pb-1">{id.toUpperCase()}</span>
+            <span className="text-lg md:text-3xl pb-1">{id.toUpperCase()}</span>
           </div>
         </div>
         <div
@@ -87,17 +90,17 @@ const CollegeDetails = () => {
             backgroundPosition: "center",
             backgroundSize: "cover",
           }}
-          className="w-1/2 h-full overlayGradient2 relative"
+          className="hidden md:block w-1/2 h-full overlayGradient2 relative"
         ></div>
       </div>
       <div className="w-full h-[85%]">
         {/* Navbar */}
-        <div className="flex justify-between px-32 mt-5">
+        <div className="flex justify-between px-5 md:px-32 mt-5">
           {navBar?.map((ele, index) => (
             <div
               className={`${
                 selected === ele ? "bg-white italic drop-shadow-xl" : ""
-              } py-4 w-48 text-center rounded-t-xl cursor-pointer`}
+              } py-2 md:py-4 w-48 text-center rounded-t-xl cursor-pointer h-12 md:h-full truncate px-2`}
               key={index}
               onClick={() => setSelected(ele)}
             >
