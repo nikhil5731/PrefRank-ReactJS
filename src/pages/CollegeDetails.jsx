@@ -3,12 +3,11 @@ import { IoIosArrowBack } from "react-icons/io";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import CollegeInfo from "../components/CollegeInfo";
-import LoadingScreen from "../assets/loadingScreen.mp4";
 import axios from "axios";
+import Loader from "../components/Loader";
 
-const CollegeDetails = () => {
+const CollegeDetails = ({ isLoading, setIsLoading }) => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
   const { id } = useParams();
   const [selected, setSelected] = useState("College Info");
   const [collegeData, setcollegeData] = useState({
@@ -47,7 +46,7 @@ const CollegeDetails = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      setIsLoading(true);
       try {
         const response = await axios.get(
           `${process.env.REACT_APP_BACKEND_URL}/get-college-info?collegeName=${id}`
@@ -70,17 +69,14 @@ const CollegeDetails = () => {
       } catch (error) {
         console.log("Error in fetching College Details!");
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
     fetchData();
   }, []);
 
-  return loading ? (
-    <video autoPlay muted loop className="bg-[#bdd4fd] h-screen w-screen">
-      <source src={LoadingScreen} type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
+  return isLoading ? (
+    <Loader />
   ) : (
     <div className="bg-[#C4DAFF] h-screen w-screen overflow-hidden">
       {/* Top Header */}

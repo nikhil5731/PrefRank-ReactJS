@@ -2,8 +2,9 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
 
-const MyComponent = () => {
+const MyComponent = ({ isLoading, setIsLoading }) => {
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const [ratings, setRatings] = useState([]);
@@ -14,24 +15,33 @@ const MyComponent = () => {
 
   useEffect(() => {
     if (!college1 || !college2) {
-        navigate("/colleges")
+      navigate("/colleges");
     }
   }, []);
 
   useEffect(() => {
     const getRatings = async () => {
-      const ratings = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/get-ratings`,
-        {
-          colleges: [college1, college2],
-        }
-      );
-      setRatings(ratings.data);
+      setIsLoading(true);
+      try {
+        const ratings = await axios.post(
+          `${process.env.REACT_APP_BACKEND_URL}/get-ratings`,
+          {
+            colleges: [college1, college2],
+          }
+        );
+        setRatings(ratings.data);
+      } catch (error) {
+        console.log(error, "in Comare! ");
+      } finally {
+        setIsLoading(false);
+      }
     };
     getRatings();
   }, []);
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <div className="h-screen w-screen overflow-auto">
       <div className="py-3 text-center text-3xl font-semibold italic border border-black">
         Comparison
@@ -44,7 +54,9 @@ const MyComponent = () => {
               alt=""
               className="w-64 rounded-xl mx-auto"
             />
-            <span className="text-lg font-bold text-center whitespace-nowrap truncate w-full">{college1}</span>
+            <span className="text-lg font-bold text-center whitespace-nowrap truncate w-full">
+              {college1}
+            </span>
           </div>
           <div className="flex flex-col items-center gap-5">
             <span>Courses:</span>
@@ -73,7 +85,9 @@ const MyComponent = () => {
               alt=""
               className="w-64 rounded-xl mx-auto"
             />
-            <span className="text-lg font-bold text-center whitespace-nowrap truncate w-full">{college2}</span>
+            <span className="text-lg font-bold text-center whitespace-nowrap truncate w-full">
+              {college2}
+            </span>
           </div>
           <div className="flex flex-col items-center gap-5">
             <span>Courses:</span>

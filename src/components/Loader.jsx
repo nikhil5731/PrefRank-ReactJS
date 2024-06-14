@@ -1,14 +1,12 @@
 import React from "react";
+import LoadingScreen from "../assets/loadingScreen.mp4";
 
-const Loader = ({ className }) => {
+const Loader = () => {
   return (
-    <div
-      className={
-        "inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" +
-        className
-      }
-      role="status"
-    ></div>
+    <video autoPlay muted loop className="bg-[#bdd4fd] h-screen w-screen">
+      <source src={LoadingScreen} type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
   );
 };
 

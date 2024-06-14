@@ -80,8 +80,16 @@ function App() {
           />
         }
       />
-      <Route path="/:id" element={<CollegeDetails />} />
-      <Route path="/compareColleges" element={<Compare />} />
+      <Route
+        path="/:id"
+        element={
+          <CollegeDetails isLoading={isLoading} setIsLoading={setIsLoading} />
+        }
+      />
+      <Route
+        path="/compareColleges"
+        element={<Compare isLoading={isLoading} setIsLoading={setIsLoading} />}
+      />
     </Routes>
   );
 }
