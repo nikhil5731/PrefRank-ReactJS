@@ -2,15 +2,6 @@ import React from "react";
 
 const RankingsTable = ({ data }) => {
   // console.log(data)
-  const renderTableHeader = (category) => {
-    return (
-      <tr>
-        <th colSpan="14" className="px-4 pt-5 border-b text-xl text-blue-600">
-          {category}
-        </th>
-      </tr>
-    );
-  };
 
   const renderTableSubHeader = () => {
     return (
@@ -19,41 +10,41 @@ const RankingsTable = ({ data }) => {
           Department
         </th>
         <th className="px-4 py-2 border border-gray-300 bg-gray-100">
-          Opening Rank 2018
+          Cutoff Ranks 2018
         </th>
-        <th className="px-4 py-2 border border-gray-300 bg-gray-100">
+        {/* <th className="px-4 py-2 border border-gray-300 bg-gray-100">
           Closing Rank 2018
-        </th>
+        </th> */}
         <th className="px-4 py-2 border border-gray-300 bg-gray-100">
-          Opening Rank 2019
+          Cutoff Ranks 2019
         </th>
-        <th className="px-4 py-2 border border-gray-300 bg-gray-100">
+        {/* <th className="px-4 py-2 border border-gray-300 bg-gray-100">
           Closing Rank 2019
-        </th>
+        </th> */}
         <th className="px-4 py-2 border border-gray-300 bg-gray-100">
-          Opening Rank 2020
+          Cutoff Ranks 2020
         </th>
-        <th className="px-4 py-2 border border-gray-300 bg-gray-100">
+        {/* <th className="px-4 py-2 border border-gray-300 bg-gray-100">
           Closing Rank 2020
-        </th>
+        </th> */}
         <th className="px-4 py-2 border border-gray-300 bg-gray-100">
-          Opening Rank 2021
+          Cutoff Ranks 2021
         </th>
-        <th className="px-4 py-2 border border-gray-300 bg-gray-100">
+        {/* <th className="px-4 py-2 border border-gray-300 bg-gray-100">
           Closing Rank 2021
-        </th>
+        </th> */}
         <th className="px-4 py-2 border border-gray-300 bg-gray-100">
-          Opening Rank 2022
+          Cutoff Ranks 2022
         </th>
-        <th className="px-4 py-2 border border-gray-300 bg-gray-100">
+        {/* <th className="px-4 py-2 border border-gray-300 bg-gray-100">
           Closing Rank 2022
-        </th>
+        </th> */}
         <th className="px-4 py-2 border border-gray-300 bg-gray-100">
-          Opening Rank 2023
+          Cutoff Ranks 2023
         </th>
-        <th className="px-4 py-2 border border-gray-300 bg-gray-100">
+        {/* <th className="px-4 py-2 border border-gray-300 bg-gray-100">
           Closing Rank 2023
-        </th>
+        </th> */}
       </tr>
     );
   };
@@ -77,41 +68,41 @@ const RankingsTable = ({ data }) => {
           {entry.Department}
         </td>
         <td className="px-4 py-2 border text-center">
-          {entry.Opening_Rank_2018}
+          {entry.Opening_Rank_2018} - {entry.Closing_Rank_2018}
         </td>
-        <td className="px-4 py-2 border text-center">
+        {/* <td className="px-4 py-2 border text-center">
           {entry.Closing_Rank_2018}
-        </td>
+        </td> */}
         <td className="px-4 py-2 border text-center">
-          {entry.Opening_Rank_2019}
+          {entry.Opening_Rank_2019} - {entry.Closing_Rank_2019}
         </td>
-        <td className="px-4 py-2 border text-center">
+        {/* <td className="px-4 py-2 border text-center">
           {entry.Closing_Rank_2019}
-        </td>
+        </td> */}
         <td className="px-4 py-2 border text-center">
-          {entry.Opening_Rank_2020}
+          {entry.Opening_Rank_2020} - {entry.Closing_Rank_2020}
         </td>
-        <td className="px-4 py-2 border text-center">
+        {/* <td className="px-4 py-2 border text-center">
           {entry.Closing_Rank_2020}
-        </td>
+        </td> */}
         <td className="px-4 py-2 border text-center">
-          {entry.Opening_Rank_2021}
+          {entry.Opening_Rank_2021} - {entry.Closing_Rank_2021}
         </td>
-        <td className="px-4 py-2 border text-center">
+        {/* <td className="px-4 py-2 border text-center">
           {entry.Closing_Rank_2021}
-        </td>
+        </td> */}
         <td className="px-4 py-2 border text-center">
-          {entry.Opening_Rank_2022}
+          {entry.Opening_Rank_2022} - {entry.Closing_Rank_2022}
         </td>
-        <td className="px-4 py-2 border text-center">
+        {/* <td className="px-4 py-2 border text-center">
           {entry.Closing_Rank_2022}
-        </td>
+        </td> */}
         <td className="px-4 py-2 border text-center">
-          {entry.Opening_Rank_2023}
+          {entry.Opening_Rank_2023} - {entry.Closing_Rank_2023}
         </td>
-        <td className="px-4 py-2 border text-center">
+        {/* <td className="px-4 py-2 border text-center">
           {entry.Closing_Rank_2023}
-        </td>
+        </td> */}
       </tr>
     ));
   };

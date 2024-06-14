@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import RankingsTable from "./RankingTable";
 
 const CollegeInfo = ({ selected, setSelected, collegeDetails }) => {
-  const topics = ["NIRF Ranking", "Courses and Fees", "News"];
+  const topics = ["About", "Courses Info", "News"];
 
   const mapping = {
     HS: "Home State Quota",
@@ -25,6 +25,12 @@ const CollegeInfo = ({ selected, setSelected, collegeDetails }) => {
   const percentage = parseInt(
     (collegeDetails.Ratings["Overall Rating"] / 5) * 100
   );
+  const data = [
+    { course: "Mathematics", fees: "$200", eligibility: "High School" },
+    { course: "Physics", fees: "$250", eligibility: "High School" },
+    { course: "Chemistry", fees: "$220", eligibility: "High School" },
+  ];
+
   const radius = 50;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (percentage / 100) * circumference;
@@ -44,7 +50,7 @@ const CollegeInfo = ({ selected, setSelected, collegeDetails }) => {
 
   const newsLinksText = collegeDetails?.News_link;
   const newsText = collegeDetails?.News;
-  const reviewText = collegeDetails?.Review?.replace(/\n/g, "<br>");
+  // const reviewText = collegeDetails?.Review?.replace(/\n/g, "<br>");
   const placementText = collegeDetails?.Placements?.replace(
     /\n/g,
     `<br><br>`
@@ -65,17 +71,98 @@ const CollegeInfo = ({ selected, setSelected, collegeDetails }) => {
     "College Info": (
       <div className="text-black pb-[5rem] pt-5">
         {topics?.map((topic, index) => (
-          <div>
-            <div key={index} className="text-black font-bold text-xl">
+          <div key={index}>
+            {/* <div key={index} className="text-black font-bold text-xl">
               {index + 1}. {topic}
-            </div>
+            </div> */}
             <div className="mx-5 md:mx-10 mb-5">
+              {topic === "About" && (
+                <div className="h-fit overflow-auto rounded-xl border border-gray-700 drop-shadow-xl p-5">
+                  <div>
+                    <div className="flex flex-col items-center md:relative">
+                      <h3 className="text-2xl font-bold w-full md:w-[60%] h-fit md:p-5 mx-auto text-center font-sans">
+                        About {collegeDetails.Institute}
+                      </h3>
+                      <span className="bg-[#C4DAFF] text-lg text-center my-5 md:my-0 drop-shadow-lg w-fit h-fit p-5 rounded-xl italic md:absolute md:top-0 md:right-0">
+                        NIRF Ranking: 30
+                      </span>
+                    </div>
+                  </div>
+                  <div className="text-purple-950 my-3 md:px-5">
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                    Inventore libero laboriosam obcaecati magnam voluptatibus
+                    nam alias ex maiores hic suscipit quo iure unde, odit
+                    consectetur earum rerum velit! Ipsa maxime itaque rerum
+                    harum quas eius temporibus, veniam veritatis iusto enim
+                    quidem optio labore nisi autem! Totam magni amet eius, animi
+                    ratione ipsa! Exercitationem vel voluptatum consequatur id
+                    tenetur soluta. Voluptatum assumenda vel maxime molestiae
+                    mollitia odio, non ad quis praesentium, natus reiciendis
+                    dolor aliquid id voluptates a laborum error doloribus eaque
+                    quae magnam obcaecati quo velit officiis. Reprehenderit
+                    beatae eius unde! Quo corporis odit ad corrupti natus
+                    pariatur sapiente explicabo nobis eveniet laborum? Tempore
+                    dolorem optio perferendis nisi dignissimos iusto enim
+                    placeat atque molestiae saepe ullam, quod expedita? Rem iure
+                    aliquam quam est quidem molestiae vel dicta asperiores,
+                    similique officiis. Mollitia debitis expedita repellendus
+                    nemo voluptatem quaerat quam laboriosam. Molestias quas amet
+                    omnis sunt voluptas earum aut sed accusamus libero ipsum
+                    maiores expedita eius, sit minus, suscipit ducimus ut.
+                    Commodi qui similique eaque obcaecati laudantium saepe fuga
+                    placeat corporis impedit labore dolores ab doloribus,
+                    assumenda iste, quos voluptate sint laboriosam praesentium.
+                    Porro tenetur delectus doloremque accusamus culpa, animi
+                    fuga aspernatur? Nesciunt hic architecto beatae illo iste
+                    rem animi dicta inventore cum tempora ipsam non in, sit
+                    aperiam quos? Hic dolore omnis fugiat distinctio delectus
+                    quae, praesentium aliquam esse atque minima exercitationem,
+                    laboriosam natus laborum nesciunt, ipsa corrupti porro nisi
+                    quas sequi eaque nemo veniam veritatis?
+                  </div>
+                </div>
+              )}
+              {topic === "Courses Info" && (
+                <div>
+                  <div className="container md:relative md:px-10 mx-auto mt-10 flex flex-col items-center justify-center py-10">
+                    <h1 className="text-2xl md:top-1/2 md:left-0 md:-translate-y-1/2 text-[#122D74] font-bold mb-4 text-center font-sans md:absolute md:transform md:-rotate-90">
+                      Courses Information
+                    </h1>
+                    <table className="bg-white border-2 border-gray-200 drop-shadow-lg mx-auto w-full md:w-[70%]">
+                      <thead>
+                        <tr>
+                          <th className="p-4 border-b-2 w-1/3 border-gray-200 text-lg bg-[#C4DAFF]">
+                            Courses
+                          </th>
+                          <th className="p-4 border-b-2 w-1/3 border-gray-200 text-lg">
+                            Fees
+                          </th>
+                          <th className="p-4 border-b-2 w-1/3 border-gray-200 bg-[#C4DAFF] text-lg">
+                            Eligibility
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {data.map((item, index) => (
+                          <tr key={index} className="border-2 border-gray-200">
+                            <td className="p-4 text-center bg-[#C4DAFF]">
+                              {item.course}
+                            </td>
+                            <td className="p-4 text-center ">{item.fees}</td>
+                            <td className="p-4 text-center  bg-[#C4DAFF]">
+                              {item.eligibility}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
               {topic === "News" && (
-                <div className="py-5">
-                  <div className="mx-auto mb-5 max-w-5xl">
-                    <h3 className="text-3xl font-bold mx-auto text-center mb-8">
-                      Recent News:
-                    </h3>
+                <div className="py-3">
+                  <div className="mb-5 max-w-5xl">
+                    <h3 className="text-3xl font-bold mb-8">Recent News</h3>
                     {news?.map((text, index) => (
                       <div
                         key={index}
@@ -91,7 +178,7 @@ const CollegeInfo = ({ selected, setSelected, collegeDetails }) => {
                           rel="noopener noreferrer"
                           className="underline text-blue-500 italic"
                         >
-                          Link
+                          Read More
                         </a>
                       </div>
                     ))}
