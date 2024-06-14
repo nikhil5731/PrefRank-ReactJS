@@ -38,7 +38,7 @@ const CollegeInfo = ({ selected, setSelected, collegeDetails }) => {
   // const filledWidth = (percentage / 100) * lineWidth;
 
   const [selectedQuota, setSelectedQuota] = useState({
-    state: "OS",
+    state: Object.keys(collegeDetails.Cutoff)[0] || "OS",
     category: "OPEN-Gender-Neutral",
   });
   const splitText = (text) => {
@@ -213,11 +213,16 @@ const CollegeInfo = ({ selected, setSelected, collegeDetails }) => {
               }
               className="text-lg outline-none p-3 border border-black rounded-xl mb-3 md:mr-5"
             >
-              {["OS", "HS", "AI"].map((ele) => (
-                <>
-                  <option value={ele}>{mapping[ele]}</option>
-                </>
-              ))}
+              {Object.keys(collegeDetails.Cutoff).length > 0 &&
+                Object.keys(collegeDetails.Cutoff).map((ele, index) => {
+                  return (
+                    <>
+                      <option value={ele} key={index}>
+                        {mapping[ele]}
+                      </option>
+                    </>
+                  );
+                })}
             </select>
             <select
               name=""
