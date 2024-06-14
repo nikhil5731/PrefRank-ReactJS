@@ -26,6 +26,10 @@ const Colleges = ({
     "Infrastructure",
     "Crowd & Campus Life",
   ]);
+  const [compareColleges, setCompareColleges] = useState({
+    college1: "",
+    college2: "",
+  });
   const [isCheck, setIsCheck] = useState({
     Placements: true,
     "Faculty & Course Curriculum": true,
@@ -67,17 +71,26 @@ const Colleges = ({
   };
 
   useEffect(() => {
+    if (eligibleColleges.length <= 0) {
+      alert("No College Found!");
+      navigate("/");
+    }
+  }, [eligibleColleges, navigate]);
+
+  useEffect(() => {
     if (ratings.length > 0) {
       setSelectedCollegeRatings(ratings[0]);
     }
   }, [ratings]);
 
   useEffect(() => {
-    if (eligibleColleges.length <= 0) {
-      alert("No College Found!");
-      navigate("/");
+    if (uniqueColleges.length > 1) {
+      setCompareColleges({
+        college1: uniqueColleges[0],
+        college2: uniqueColleges[1],
+      });
     }
-  }, [eligibleColleges, navigate]);
+  }, [uniqueColleges]);
 
   useEffect(() => {
     if (eligibleColleges) {
@@ -241,34 +254,67 @@ const Colleges = ({
             <div className="flex items-center gap-3">
               <span>1.</span>
               <select
-                name="colleges"
-                id="colleges"
+                name="college1"
+                id="college1"
+                value={compareColleges.college1}
                 className="outline-none p-2 rounded-xl w-[100%]"
+                onChange={(e) => {
+                  setCompareColleges({
+                    ...compareColleges,
+                    college1: e.target.value,
+                  });
+                }}
               >
-                {uniqueColleges?.map((college, index) => (
-                  <option value={college} key={index}>
-                    {college}
-                  </option>
-                ))}
+                {/* <option value="">Choose a college1</option> */}
+                {uniqueColleges?.map(
+                  (college, index) =>
+                    college !== compareColleges.college2 && (
+                      <option value={college} key={index}>
+                        {college}
+                      </option>
+                    )
+                )}
               </select>
             </div>
             <div className="flex items-center gap-3">
               <span>2.</span>
               <select
-                name="colleges"
-                id="colleges"
+                name="college2"
+                id="college2"
+                value={compareColleges.college2}
                 className="outline-none p-2 rounded-xl w-[100%]"
+                onChange={(e) => {
+                  setCompareColleges({
+                    ...compareColleges,
+                    college2: e.target.value,
+                  });
+                }}
               >
-                {uniqueColleges?.map((college, index) => (
-                  <option value={college} key={index}>
-                    {college}
-                  </option>
-                ))}
+                {/* <option value="">Choose a college2</option> */}
+                {uniqueColleges?.map(
+                  (college, index) =>
+                    college !== compareColleges.college1 && (
+                      <option value={college} key={index}>
+                        {college}
+                      </option>
+                    )
+                )}
               </select>
             </div>
             <Button
               title={"Compare"}
-              handleClick={() => {}}
+              handleClick={() => {
+                if (
+                  compareColleges.college1.length < 1 ||
+                  compareColleges.college2.length < 1
+                ) {
+                  alert("Choose both colleges!");
+                  return;
+                }
+                navigate(
+                  `/compareColleges?college1=${compareColleges.college1}&college2=${compareColleges.college2}`
+                );
+              }}
               className={"mt-2"}
             />
           </div>

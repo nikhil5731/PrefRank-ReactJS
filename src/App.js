@@ -6,6 +6,7 @@ import { Route, Routes } from "react-router-dom";
 import Video from "./components/Video";
 import CollegeDetails from "./pages/CollegeDetails";
 import axios from "axios";
+import Compare from "./pages/Compare";
 
 function App() {
   const [videoClicked, setVideoClicked] = useState(false);
@@ -80,6 +81,7 @@ function App() {
         }
       />
       <Route path="/:id" element={<CollegeDetails />} />
+      <Route path="/compareColleges" element={<Compare />} />
     </Routes>
   );
 }
