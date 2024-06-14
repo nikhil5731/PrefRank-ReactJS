@@ -54,7 +54,7 @@ const MyComponent = () => {
               Object.keys(ratings[0]).map(
                 (rating, index) =>
                   rating !== "Institute" && (
-                    <span key={index}>
+                    <span key={index} className="text-center">
                       {rating}: {ratings[0][rating]}/5
                     </span>
                   )
@@ -83,7 +83,7 @@ const MyComponent = () => {
               Object.keys(ratings[1]).map(
                 (rating, index) =>
                   rating !== "Institute" && (
-                    <span key={index}>
+                    <span key={index} className="text-center">
                       {rating}: {ratings[1][rating]}/5
                     </span>
                   )
