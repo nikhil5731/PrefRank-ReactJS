@@ -6,16 +6,15 @@ import { useNavigate } from "react-router-dom";
 import LoadingScreen from "../assets/loadingScreen.mp4";
 import axios from "axios";
 
-const Home = ({ setEligibleColleges, isLoading, setIsLoading, setRatings }) => {
+const Home = ({
+  setEligibleColleges,
+  isLoading,
+  setIsLoading,
+  setRatings,
+  data,
+  setData,
+}) => {
   const navigate = useNavigate();
-  const [data, setData] = useState({
-    name: "",
-    email: "",
-    jee: "",
-    quota: "",
-    category: "",
-    air: "",
-  });
 
   const handleOnChange = (e) => {
     const { value, name } = e.target;

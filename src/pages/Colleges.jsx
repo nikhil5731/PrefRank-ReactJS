@@ -8,6 +8,7 @@ import BlurSSImage from "../assets/blurSS.png";
 import Modal from "../components/Modal";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import GeneratePDF from "../components/GeneratePDF";
 
 const Colleges = ({
   eligibleColleges,
@@ -17,6 +18,7 @@ const Colleges = ({
   states,
   uniqueColleges,
   setRatings,
+  data,
 }) => {
   const navigate = useNavigate();
   const [choices, setChoices] = useState([
@@ -326,8 +328,23 @@ const Colleges = ({
               backgroundSize: "cover",
             }}
           >
-            <Button title={"Preview"} handleClick={() => {}} className={""} />
-            <Button title={"Download"} handleClick={() => {}} />
+            <GeneratePDF
+              name={data.name}
+              email={data.email}
+              colleges={viewColleges
+                .sort((a, b) => b.overallRating - a.overallRating)
+                .slice(0, 5)}
+              criteria={choices}
+              state={`${
+                selected.states.length > 0
+                  ? selected.states.join(", ")
+                  : "All India"
+              }`}
+              rank={data.air}
+              jeeExam={"JEE " + data.jee}
+              stateQuota={data.quota === "HS" ? "Home State" : data.quota === "OS" ? "Other State" : "All India"}
+              categories={[data.category]}
+            />
           </div>
         </div>
         {isOpen && (

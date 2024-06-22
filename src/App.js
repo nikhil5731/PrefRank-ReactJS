@@ -9,6 +9,15 @@ import axios from "axios";
 import Compare from "./pages/Compare";
 
 function App() {
+  const [data, setData] = useState({
+    name: "",
+    email: "",
+    jee: "",
+    quota: "",
+    category: "",
+    air: "",
+  });
+
   const [videoClicked, setVideoClicked] = useState(false);
   const [eligibleColleges, setEligibleColleges] = useState(
     JSON.parse(localStorage.getItem("eligibleColleges")) || []
@@ -62,6 +71,8 @@ function App() {
               isLoading={isLoading}
               setIsLoading={setIsLoading}
               setRatings={setRatings}
+              data={data}
+              setData={setData}
             />
           )
         }
@@ -77,6 +88,7 @@ function App() {
             branches={branches}
             states={states}
             setRatings={setRatings}
+            data={data}
           />
         }
       />

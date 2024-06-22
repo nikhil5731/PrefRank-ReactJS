@@ -10,7 +10,7 @@ const CollegeCard = ({
   collegeRating,
 }) => {
   const imageUrl =
-    "https://s3-alpha-sig.figma.com/img/6836/204d/8cd3702e949f299be228695104300383?Expires=1718582400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=HP9PVVsg0EGtdOHHZhvo4Yq9KatITXSLf5Z2HhDKSoH~W9G6UtPPl76u27V985e9rSgf0M0ALh7qdIspevJkq4kD~T~K2cYt7lEiFI-4C4h8j6HQyfEKo8QJV4D7JDphjk5Zhi5XI7Vl-aw0-7GT-UMJ-aupoJuy5lj1VJiHCOno9lyQWgsRNoXSW6v~w9cuj~7vHQOak8nEyHxlBQ0NRousingNtWWwFFOC7XreDWEdU2zLQZYPXD5K32pc7R2xNab~dQRVGc-NuhtIq24nq1mVwNuJibLonGnomLKIpbxjSFUSrREjJVVtkicRj1yKbXQOykkDED1BpIpEMnv5bw__";
+    "https://s3-alpha-sig.figma.com/img/6836/204d/8cd3702e949f299be228695104300383?Expires=1719792000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=nL3bTmvDSHtW1DYyY7r0EccLnIaTvrr08Eb-tslcNxZircNIv7YAcc4st1-8-m2VzQa5sS-4ChDpHfsX5EZ9dyKVEcvoyhBtWbinWjsLxd1FxwRME3uzXss-bUPL1SspKRCWpL2AzW4OS525PSuhvQPTTkWSmWX4p1OTVrmFot56CFtvJrLtwVVMrjS0RdMhmY7XeydjNVQUbap~Qz2dihD3sdYNR8-5Kr3pTaPKKHyq99zxhyq2WcPsd-HbN8IrordsujUIOYjE5gEK74O5-Cz8uKDh~hNMWeHp36P2nyL-8WRAdAPNOP7Zj9GvR3pFvlhsp2Q~vMJhyGPENaSx1g__";
   return (
     <Link
       to={"/" + collegeName}
