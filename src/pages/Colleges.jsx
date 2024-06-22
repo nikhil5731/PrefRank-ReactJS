@@ -341,6 +341,7 @@ const Colleges = ({
                   : "All India"
               }`}
               rank={data.air}
+              isCheck={isCheck}
               jeeExam={"JEE " + data.jee}
               stateQuota={data.quota === "HS" ? "Home State" : data.quota === "OS" ? "Other State" : "All India"}
               categories={[data.category]}

@@ -10,6 +10,7 @@ const GeneratePDF = ({
   criteria,
   state,
   rank,
+  isCheck,
   jeeExam,
   stateQuota,
   categories,
@@ -180,15 +181,17 @@ const GeneratePDF = ({
     yPosition -= 20;
 
     criteria.forEach((criterion, index) => {
-      page.drawText(`${index + 1}. ${criterion}`, {
-        x: 70,
-        y: yPosition,
-        size: fontSizeContent,
-        font: helveticaFont,
-        color: rgb(0, 0, 0),
-      });
+      if (isCheck[criterion]) {
+        page.drawText(`${index + 1}. ${criterion}`, {
+          x: 70,
+          y: yPosition,
+          size: fontSizeContent,
+          font: helveticaFont,
+          color: rgb(0, 0, 0),
+        });
 
-      yPosition -= 20;
+        yPosition -= 20;
+      }
     });
 
     // Serialize the PDFDocument to bytes (a Uint8Array)
