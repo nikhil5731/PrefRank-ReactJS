@@ -3,9 +3,7 @@ import "./App.css";
 import Colleges from "./pages/Colleges";
 import Home from "./pages/Home";
 import { Route, Routes } from "react-router-dom";
-import Video from "./components/Video";
 import CollegeDetails from "./pages/CollegeDetails";
-import axios from "axios";
 import Compare from "./pages/Compare";
 
 function App() {
@@ -18,7 +16,6 @@ function App() {
     air: "",
   });
 
-  const [videoClicked, setVideoClicked] = useState(false);
   const [eligibleColleges, setEligibleColleges] = useState(
     JSON.parse(localStorage.getItem("eligibleColleges")) || []
   );
@@ -28,9 +25,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [ratings, setRatings] = useState([]);
 
-  const handleVideoClick = () => {
-    setVideoClicked(true);
-  };
 
   useEffect(() => {
     localStorage.setItem("eligibleColleges", JSON.stringify(eligibleColleges));
@@ -63,18 +57,14 @@ function App() {
       <Route
         path="/"
         element={
-          !videoClicked ? (
-            <Video handleVideoClick={handleVideoClick} />
-          ) : (
-            <Home
-              setEligibleColleges={setEligibleColleges}
-              isLoading={isLoading}
-              setIsLoading={setIsLoading}
-              setRatings={setRatings}
-              data={data}
-              setData={setData}
-            />
-          )
+          <Home
+            setEligibleColleges={setEligibleColleges}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
+            setRatings={setRatings}
+            data={data}
+            setData={setData}
+          />
         }
       />
       <Route
